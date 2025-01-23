@@ -17,7 +17,7 @@
 		position: fixed;
 		text-align: right;
 		top: 0;
-		width: _size(sidebar-width / 0.75);
+		width: _size(100vh);
 		z-index: _misc(z-index-base);
 
 		> .inner {
