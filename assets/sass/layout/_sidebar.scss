@@ -7,7 +7,7 @@
 /* Sidebar */
 
 	#sidebar {
-		@include padding(2em, 2em);
+		@include padding(1.5em, 1.5em);
 		background: _palette(bg);
 		cursor: default;
 		height: 100vh;
