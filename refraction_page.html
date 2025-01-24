@@ -59,14 +59,14 @@
 	{
 		case LightSourceType_Point:
 		{
-			Vector2 D = Vector2(x, y) - LightP;
-			float DistanceSq = Vector2::DotProduct(D, D);
-			float distance = sqrt(DistanceSq);
-			float s = distance / LightSource->radius;
-			if (s >= 1.0)
-			return 0.0;
-			float s2 = s * s;
-			Result = LightSource->intensity * (float)pow((1 - s2), 2) / (1 + LightSource->radialFalloff * s);
+			Vector2 dist = Vector2(x, y) - LightP;
+			float distFromConeCenter = sqrt(Vector2::DotProduct(dist, dist)) / LightSource->radius;
+
+			if (distFromConeCenter >= 1.0)
+				return 0.0;
+
+			float distFromConeCenterSquared = distFromConeCenter * distFromConeCenter;
+			Result = LightSource->intensity * pow((1 - distFromConeCenterSquared), 2) / (1 + LightSource->radialFalloff * distFromConeCenter);
 		} break;
 
 		case LightSourceType_Directional:
