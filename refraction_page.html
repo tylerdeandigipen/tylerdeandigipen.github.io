@@ -37,8 +37,8 @@
 							<p>
 								Refraction is one of my favorite and one of the most challenging projects I've worked on yet. Due to the contraints of the assignment I had to write the entire lighting engine on the cpu.
 								In order to make it as preformant as it is, I had to do a lot of low level optimization. While looking at the memory used I realised that it was very cashe incoherant, in order to fix this
-								I made my own custom datatype for colors. This allowed them to be as small as possible so they could fit in the cashe. Another optimization I did was threading the lighting calculations.
-								This allowed threads to take a set of pixels and solve them in parallel.<br />
+								I made my own custom datatype for colors. This allowed them to be as small as possible so they could fit in the cashe. Another optimization I did was multi-threading the lighting calculations.
+								With threads able to take a set of pixels and solve them in parallel, the program ran much more efficiently.<br />
 
 								<h3>How it works:</h3>
 								<ol>
