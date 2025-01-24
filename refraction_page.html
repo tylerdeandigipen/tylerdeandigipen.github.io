@@ -35,8 +35,8 @@
 							<h1 class="major">Making Refraction</h1>
 							<span class="image fit"><img src="images/LightingShowcase.gif" alt="" /></span>
 							<p>
-								Refraction is one of my favorite and one of the most challenging projects I've worked on yet. Due to the contraints of the assignment I had to write the entire lighting engine on the cpu.
-								In order to make it as preformant as it is, I had to do a lot of low level optimization. While looking at the memory used I realised that it was very cashe incoherant, in order to fix this
+								Refraction is one of my favorite and one of the most challenging projects I've worked on yet. A fast cpu based lighting engine and renderer. Due to it being cpu based I had to do a lot of low 
+								level optimization. While looking at the memory used I realised that it was very cashe incoherant, in order to fix this
 								I made my own custom datatype for colors. This allowed them to be as small as possible so they could fit in the cashe. Another optimization I did was multi-threading the lighting calculations.
 								With threads able to take a set of pixels and solve them in parallel, the program ran much more efficiently.<br />
 
@@ -49,15 +49,103 @@
 								</ol>
 
 								<h3>Code Sample</h3>
-								<pre><code>i = 0;
+								<pre><code>float Renderer::FindPixelLuminosity(float x, float y, Light* LightSource)
+{
+	float normalMin = 0.75f;
+	Vector2 LightP = LightSource->position - CameraP;
+	float Result = 0.0f;
 
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
+	switch (LightSource->Type)
+	{
+	case LightSourceType_Point:
+	{
+	Vector2 D = Vector2(x, y) - LightP;
+	float DistanceSq = Vector2::DotProduct(D, D);
+	float distance = sqrt(DistanceSq);
+	float s = distance / LightSource->radius;
+	if (s >= 1.0)
+	return 0.0;
+	float s2 = s * s;
+	Result = LightSource->intensity * (float)pow((1 - s2), 2) / (1 + LightSource->radialFalloff * s);
+	} break;
+
+	case LightSourceType_Directional:
+	{
+	// @TODO: Check this against actual real-world spotlights.
+	float DegreesToRadians = 0.01745329251994329577f;
+	float AngleRadians = DegreesToRadians * -LightSource->angle;
+	float MinAngleRadians = DegreesToRadians * -LightSource->minAngle;
+	float MaxAngleRadians = DegreesToRadians * -LightSource->maxAngle;
+
+	// @TODO: Precompute this?
+	Vector2 FrustumLeftEdge = Vector2(-sinf(MinAngleRadians), cosf(MinAngleRadians));
+	Vector2 FrustumRightEdge = Vector2(-sinf(MaxAngleRadians), cosf(MaxAngleRadians));
+	float dRadius = Vector2::Length(FrustumRightEdge - FrustumLeftEdge);
+
+	Vector2 EmissionDirection = Vector2(-sinf(AngleRadians), cosf(AngleRadians));
+	Vector2 EmissionTangent = Vector2(-EmissionDirection.y, EmissionDirection.x);
+	Vector2 ToPixel = Vector2(x, y) - LightP;
+
+	float Dot = Vector2::DotProduct(ToPixel, EmissionDirection);
+	if (Dot > 0.0f)
+	{
+	float DistanceSq = Vector2::DotProduct(ToPixel, ToPixel);
+	float Radius = Dot * dRadius;
+	float distance = sqrt(DistanceSq);
+	float s = distance / LightSource->radius;
+	if (s >= 1.0)
+	return 0.0;
+	float s2 = s * s;
+	float EmitterDistance = LightSource->intensity * (float)pow((1 - s2), 2) / (1 + LightSource->radialFalloff * s);
+	float FrustumDistance = (Radius - (fabsf(Vector2::DotProduct(EmissionTangent, ToPixel))));
+	if (FrustumDistance < 0.0f)
+	{
+	FrustumDistance = 0.0f;
+	}
+	if (FrustumDistance > Radius)
+	{
+	FrustumDistance = Radius;
+	}
+
+	Result = EmitterDistance * (FrustumDistance * LightSource->frustumWeight);
+	}
+	} break;
+
+	default:
+	{
+	assert(!"Encountered a light source of an unknown type.");
+	} break;
+	}
+
+	//Normal map calculations
+	if (Result > 0 && doFog != true)
+	{
+	if ((int)x + (int)CameraP.x <= normalBuffer->BufferSizeX && (int)x + (int)CameraP.x >= 0 && (int)y + (int)CameraP.y <= normalBuffer->BufferSizeY && (int)y + (int)CameraP.y >= 0)
+	{
+	float normalR = (float)normalBuffer->SampleColor((int)x + (int)CameraP.x, (int)y + (int)CameraP.y).r;
+	float normalG = (float)normalBuffer->SampleColor((int)x + (int)CameraP.x, (int)y + (int)CameraP.y).g;
+
+	if (normalR == 0 && normalG == 0)
+	{
+	return Result;
+	}
+	Vector2 pos = (Vector2(x, y));
+	Vector2 distFromLight = LightP - pos;
+	Vector2 distNormalized;
+	Vector2 normalDir = Vector2{ normalR / 255.0f, normalG / 255.0f };
+	normalDir *= 2;
+	normalDir -= Vector2{ 1,1 };
+	distNormalized.Normalize(distNormalized, distFromLight);
+	float normalFalloff = -Vector2::DotProduct(distNormalized, normalDir);
+	normalFalloff += normalMin;
+	normalFalloff = clamp(normalFalloff, 0.0f, 1.0f);
+	Result = (normalFalloff * normalStrength * Result);
+	}
+	}
+
+	return Result;
 }
-
-print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
+</code></pre>
 							</p>
 							<p></p>
 						</div>
