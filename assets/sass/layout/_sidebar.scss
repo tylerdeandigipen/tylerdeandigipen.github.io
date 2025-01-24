@@ -30,7 +30,7 @@
 			));
 			min-height: 100%;
 			opacity: 1;
-			width: 100%;
+			width: 50%;
 
 			body.is-ie & {
 				height: 100%;
@@ -138,7 +138,7 @@
 			padding: 0;
 			text-align: center;
 			top: 0;
-			width: 50%;
+			width: 100%;
 
 			> .inner {
 				@include vendor('flex-direction', 'row');
