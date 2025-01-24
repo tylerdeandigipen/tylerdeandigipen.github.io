@@ -35,11 +35,18 @@
 							<h1 class="major">Making Refraction</h1>
 							<span class="image fit"><img src="images/LightingShowcase.gif" alt="" /></span>
 							<p>
-								Refraction is one of my favorite and most challenging projects I've worked on yet. Due to the contraints of the assignment I had to write the entire lighting engine on the cpu. 
-								In order to make it as preformant I had to do a lot of low level optimization. While looking at the memory used I realised that it was very cashe incoherant, in order to fix this 
+								Refraction is one of my favorite and most challenging projects I've worked on yet. Due to the contraints of the assignment I had to write the entire lighting engine on the cpu.
+								In order to make it as preformant I had to do a lot of low level optimization. While looking at the memory used I realised that it was very cashe incoherant, in order to fix this
 								I made my own custom datatype for colors. This allowed them to be as small as possible so they could fit in the cashe. Another optimization I did was threading the lighting calculations.
 								This allowed threads to take a set of pixels and solve them in parallel.<br /> <br />
-								How it works: <br />
+
+								<h3>How it works:</h3>
+								<ol>
+									<li>All objects and tilesets are merged together into one image (the normal maps are also merged into a seperate image).</li>
+									<li>For each light we then go over each pixel in its range and calcuate the lights strength, using the normal map to factor in the surface normal.</li>
+									<li>The individual lights strength are added together resulting in the total brightness.</li>
+									<li>We then apply any post prossessing effects, like dithering and scanlines.</li>
+								</ol>
 								Step 1: All objects and tilesets are merged together into one image (the normal maps are also merged into a seperate image). <br />
 								Step 2: For each light we then go over each pixel in its range and calcuate the lights strength, using the normal map to factor in the surface normal. <br />
 								Step 3: The individual lights strength are added together resulting in the total brightness. <br />
