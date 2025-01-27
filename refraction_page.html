@@ -48,177 +48,177 @@
 								</ol>
 
 								<h3>Code Sample</h3>
-								<pre><code><span style='color:#0000ff; '>#</span><span style='color:#0000ff; '>DEFINE DEGREES_TO_RADIANS 0</span><span style='color:#0000ff; '>.</span><span style='color:#0000ff; '>01745329f </span><span style='color:#008000; '>//Precomputed degrees to radians conversion ratio</span>
-<span style='color:#0000ff; '>#</span><span style='color:#0000ff; '>DEFINE ONE_OVER_255 0</span><span style='color:#0000ff; '>.</span><span style='color:#0000ff; '>00392156f </span><span style='color:#008000; '>//Precompute 1 / 255 for conversion from 0 - 255 into 0 - 1</span>
+								<pre><code><span style='color:#009ac3; '>#</span><span style='color:#009ac3; '>DEFINE DEGREES_TO_RADIANS 0</span><span style='color:#e0e0c0; '>.</span><span style='color:#009ac3; '>01745329f </span><span style='color:#696989; '>//Precomputed degrees to radians conversion ratio</span>
+<span style='color:#009ac3; '>#</span><span style='color:#009ac3; '>DEFINE ONE_OVER_255 0</span><span style='color:#e0e0c0; '>.</span><span style='color:#009ac3; '>00392156f </span><span style='color:#696989; '>//Precompute 1 / 255 for conversion from 0 - 255 into 0 - 1</span>
 
 
-<span style='color:#008000; '>//calculate the given lightsource's effect on the current pixel</span>
-<span style='color:#0000ff; '>float</span> Renderer<span style='color:#0000ff; '>::</span>FindPixelLuminosity<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>float</span> x<span style='color:#0000ff; '>,</span> <span style='color:#0000ff; '>float</span> y<span style='color:#0000ff; '>,</span> Light<span style='color:#0000ff; '>*</span> lightSource<span style='color:#0000ff; '>)</span>
-<span style='color:#0000ff; '>{</span>
-    <span style='color:#0000ff; '>float</span> normalMin <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.75</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
-    Vector2 lightP <span style='color:#0000ff; '>=</span> lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>position <span style='color:#0000ff; '>-</span> CameraP<span style='color:#0000ff; '>;</span>
-    <span style='color:#0000ff; '>float</span> result <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
+<span style='color:#696989; '>//calculate the given lightsource's effect on the current pixel</span>
+<span style='color:#a08050; '>float</span> Renderer<span style='color:#f0e080; '>::</span>FindPixelLuminosity<span style='color:#e0e0c0; '>(</span><span style='color:#a08050; '>float</span> x<span style='color:#e0e0c0; '>,</span> <span style='color:#a08050; '>float</span> y<span style='color:#e0e0c0; '>,</span> Light<span style='color:#e0e0c0; '>*</span> lightSource<span style='color:#e0e0c0; '>)</span>
+<span style='color:#f0e080; '>{</span>
+    <span style='color:#a08050; '>float</span> normalMin <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.75</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
+    Vector2 lightP <span style='color:#e0e0c0; '>=</span> lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>position <span style='color:#e0e0c0; '>-</span> CameraP<span style='color:#f0e080; '>;</span>
+    <span style='color:#a08050; '>float</span> result <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
 
-    <span style='color:#008000; '>//Determine which algorithm to use based on lightsource type</span>
-    <span style='color:#0000ff; '>switch</span> <span style='color:#0000ff; '>(</span>lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>Type<span style='color:#0000ff; '>)</span>
-    <span style='color:#0000ff; '>{</span>
-        <span style='color:#0000ff; '>case </span><span style='color:#808000; '>LightSourceType_Point</span><span style='color:#808000; '>:</span>
-        <span style='color:#0000ff; '>{</span>
-            Vector2 dist <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>(</span>x<span style='color:#0000ff; '>,</span> y<span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>-</span> lightP<span style='color:#0000ff; '>;</span>
-            <span style='color:#0000ff; '>float</span> distFromConeCenter <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>sqrt</span><span style='color:#0000ff; '>(</span>Vector2<span style='color:#0000ff; '>::</span>DotProduct<span style='color:#0000ff; '>(</span>dist<span style='color:#0000ff; '>,</span> dist<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>/</span> lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>radius<span style='color:#0000ff; '>;</span>
+    <span style='color:#696989; '>//Determine which algorithm to use based on lightsource type</span>
+    <span style='color:#a08050; '>switch</span> <span style='color:#e0e0c0; '>(</span>lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>Type<span style='color:#e0e0c0; '>)</span>
+    <span style='color:#f0e080; '>{</span>
+        <span style='color:#a08050; '>case </span><span style='color:#7d0045; '>LightSourceType_Point</span><span style='color:#a34adc; text-decoration:underline; '>:</span>
+        <span style='color:#f0e080; '>{</span>
+            Vector2 dist <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#e0e0c0; '>(</span>x<span style='color:#e0e0c0; '>,</span> y<span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>-</span> lightP<span style='color:#f0e080; '>;</span>
+            <span style='color:#a08050; '>float</span> distFromConeCenter <span style='color:#e0e0c0; '>=</span> <span style='color:#906030; '>sqrt</span><span style='color:#e0e0c0; '>(</span>Vector2<span style='color:#f0e080; '>::</span>DotProduct<span style='color:#e0e0c0; '>(</span>dist<span style='color:#e0e0c0; '>,</span> dist<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>/</span> lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>radius<span style='color:#f0e080; '>;</span>
 
-            <span style='color:#008000; '>//if the current pixel is outside the lights radius</span>
-            <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>distFromConeCenter <span style='color:#0000ff; '>></span><span style='color:#0000ff; '>=</span> <span style='color:#800080; '>1.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>)</span>
-                <span style='color:#0000ff; '>return</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
+            <span style='color:#696989; '>//if the current pixel is outside the lights radius</span>
+            <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>distFromConeCenter <span style='color:#e0e0c0; '>></span><span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>1.0</span><span style='color:#006000; '>f</span><span style='color:#e0e0c0; '>)</span>
+                <span style='color:#a08050; '>return</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
 
-            <span style='color:#0000ff; '>float</span> distFromConeCenterSquared <span style='color:#0000ff; '>=</span> distFromConeCenter <span style='color:#0000ff; '>*</span> distFromConeCenter<span style='color:#0000ff; '>;</span>
-            result <span style='color:#0000ff; '>=</span> lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>intensity <span style='color:#0000ff; '>*</span> <span style='color:#0000ff; '>pow</span><span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>(</span><span style='color:#800080; '>1</span> <span style='color:#0000ff; '>-</span> distFromConeCenterSquared<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>,</span> <span style='color:#800080; '>2</span><span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>/</span> <span style='color:#0000ff; '>(</span><span style='color:#800080; '>1</span> <span style='color:#0000ff; '>+</span> lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>radialFalloff <span style='color:#0000ff; '>*</span> distFromConeCenter<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-        <span style='color:#0000ff; '>}</span> <span style='color:#0000ff; '>break</span><span style='color:#0000ff; '>;</span>
+            <span style='color:#a08050; '>float</span> distFromConeCenterSquared <span style='color:#e0e0c0; '>=</span> distFromConeCenter <span style='color:#e0e0c0; '>*</span> distFromConeCenter<span style='color:#f0e080; '>;</span>
+            result <span style='color:#e0e0c0; '>=</span> lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>intensity <span style='color:#e0e0c0; '>*</span> <span style='color:#906030; '>pow</span><span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>(</span><span style='color:#00d000; '>1</span> <span style='color:#e0e0c0; '>-</span> distFromConeCenterSquared<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>,</span> <span style='color:#00d000; '>2</span><span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>/</span> <span style='color:#e0e0c0; '>(</span><span style='color:#00d000; '>1</span> <span style='color:#e0e0c0; '>+</span> lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>radialFalloff <span style='color:#e0e0c0; '>*</span> distFromConeCenter<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+        <span style='color:#f0e080; '>}</span> <span style='color:#a08050; '>break</span><span style='color:#f0e080; '>;</span>
 
-        <span style='color:#0000ff; '>case </span><span style='color:#808000; '>LightSourceType_Directional</span><span style='color:#808000; '>:</span>
-        <span style='color:#0000ff; '>{</span>
-            <span style='color:#008000; '>//convert angle from degrees to radians</span>
-            <span style='color:#0000ff; '>float</span> AngleRadians <span style='color:#0000ff; '>=</span> DEGREES_TO_RADIANS <span style='color:#0000ff; '>*</span> <span style='color:#0000ff; '>-</span>lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>angle<span style='color:#0000ff; '>;</span>
-            <span style='color:#0000ff; '>float</span> MinAngleRadians <span style='color:#0000ff; '>=</span> DEGREES_TO_RADIANS <span style='color:#0000ff; '>*</span> <span style='color:#0000ff; '>-</span>lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>minAngle<span style='color:#0000ff; '>;</span>
-            <span style='color:#0000ff; '>float</span> MaxAngleRadians <span style='color:#0000ff; '>=</span> DEGREES_TO_RADIANS <span style='color:#0000ff; '>*</span> <span style='color:#0000ff; '>-</span>lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>maxAngle<span style='color:#0000ff; '>;</span>
+        <span style='color:#a08050; '>case </span><span style='color:#7d0045; '>LightSourceType_Directional</span><span style='color:#a34adc; text-decoration:underline; '>:</span>
+        <span style='color:#f0e080; '>{</span>
+            <span style='color:#696989; '>//convert angle from degrees to radians</span>
+            <span style='color:#a08050; '>float</span> AngleRadians <span style='color:#e0e0c0; '>=</span> DEGREES_TO_RADIANS <span style='color:#e0e0c0; '>*</span> <span style='color:#e0e0c0; '>-</span>lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>angle<span style='color:#f0e080; '>;</span>
+            <span style='color:#a08050; '>float</span> MinAngleRadians <span style='color:#e0e0c0; '>=</span> DEGREES_TO_RADIANS <span style='color:#e0e0c0; '>*</span> <span style='color:#e0e0c0; '>-</span>lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>minAngle<span style='color:#f0e080; '>;</span>
+            <span style='color:#a08050; '>float</span> MaxAngleRadians <span style='color:#e0e0c0; '>=</span> DEGREES_TO_RADIANS <span style='color:#e0e0c0; '>*</span> <span style='color:#e0e0c0; '>-</span>lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>maxAngle<span style='color:#f0e080; '>;</span>
 
-            <span style='color:#008000; '>//find edges of the viewcone</span>
-            Vector2 FrustumLeftEdge <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>-</span>sinf<span style='color:#0000ff; '>(</span>MinAngleRadians<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>,</span> cosf<span style='color:#0000ff; '>(</span>MinAngleRadians<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-            Vector2 FrustumRightEdge <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>-</span>sinf<span style='color:#0000ff; '>(</span>MaxAngleRadians<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>,</span> cosf<span style='color:#0000ff; '>(</span>MaxAngleRadians<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-            <span style='color:#0000ff; '>float</span> dRadius <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>::</span>Length<span style='color:#0000ff; '>(</span>FrustumRightEdge <span style='color:#0000ff; '>-</span> FrustumLeftEdge<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
+            <span style='color:#696989; '>//find edges of the viewcone</span>
+            Vector2 FrustumLeftEdge <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>-</span>sinf<span style='color:#e0e0c0; '>(</span>MinAngleRadians<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>,</span> cosf<span style='color:#e0e0c0; '>(</span>MinAngleRadians<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+            Vector2 FrustumRightEdge <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>-</span>sinf<span style='color:#e0e0c0; '>(</span>MaxAngleRadians<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>,</span> cosf<span style='color:#e0e0c0; '>(</span>MaxAngleRadians<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+            <span style='color:#a08050; '>float</span> dRadius <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#f0e080; '>::</span>Length<span style='color:#e0e0c0; '>(</span>FrustumRightEdge <span style='color:#e0e0c0; '>-</span> FrustumLeftEdge<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
 
-            <span style='color:#008000; '>//find the viewcones direction and tangent lines</span>
-            Vector2 EmissionDirection <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>-</span>sinf<span style='color:#0000ff; '>(</span>AngleRadians<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>,</span> cosf<span style='color:#0000ff; '>(</span>AngleRadians<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-            Vector2 EmissionTangent <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>-</span>EmissionDirection<span style='color:#0000ff; '>.</span>y<span style='color:#0000ff; '>,</span> EmissionDirection<span style='color:#0000ff; '>.</span>x<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-            Vector2 ToPixel <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>(</span>x<span style='color:#0000ff; '>,</span> y<span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>-</span> lightP<span style='color:#0000ff; '>;</span>
+            <span style='color:#696989; '>//find the viewcones direction and tangent lines</span>
+            Vector2 EmissionDirection <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>-</span>sinf<span style='color:#e0e0c0; '>(</span>AngleRadians<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>,</span> cosf<span style='color:#e0e0c0; '>(</span>AngleRadians<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+            Vector2 EmissionTangent <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>-</span>EmissionDirection<span style='color:#e0e0c0; '>.</span>y<span style='color:#e0e0c0; '>,</span> EmissionDirection<span style='color:#e0e0c0; '>.</span>x<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+            Vector2 ToPixel <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#e0e0c0; '>(</span>x<span style='color:#e0e0c0; '>,</span> y<span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>-</span> lightP<span style='color:#f0e080; '>;</span>
 
-            <span style='color:#008000; '>//find and check if current pixel is inside the lights viewcone</span>
-            <span style='color:#0000ff; '>float</span> Dot <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>::</span>DotProduct<span style='color:#0000ff; '>(</span>ToPixel<span style='color:#0000ff; '>,</span> EmissionDirection<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-            <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>Dot <span style='color:#0000ff; '>></span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>)</span>
-            <span style='color:#0000ff; '>{</span>
-                <span style='color:#0000ff; '>float</span> distanceSq <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>::</span>DotProduct<span style='color:#0000ff; '>(</span>ToPixel<span style='color:#0000ff; '>,</span> ToPixel<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-                <span style='color:#0000ff; '>float</span> radius <span style='color:#0000ff; '>=</span> Dot <span style='color:#0000ff; '>*</span> dRadius<span style='color:#0000ff; '>;</span>
-                <span style='color:#0000ff; '>float</span> distance <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>sqrt</span><span style='color:#0000ff; '>(</span>distanceSq<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-                <span style='color:#0000ff; '>float</span> s <span style='color:#0000ff; '>=</span> distance <span style='color:#0000ff; '>/</span> lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>radius<span style='color:#0000ff; '>;</span>
+            <span style='color:#696989; '>//find and check if current pixel is inside the lights viewcone</span>
+            <span style='color:#a08050; '>float</span> Dot <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#f0e080; '>::</span>DotProduct<span style='color:#e0e0c0; '>(</span>ToPixel<span style='color:#e0e0c0; '>,</span> EmissionDirection<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+            <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>Dot <span style='color:#e0e0c0; '>></span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#e0e0c0; '>)</span>
+            <span style='color:#f0e080; '>{</span>
+                <span style='color:#a08050; '>float</span> distanceSq <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#f0e080; '>::</span>DotProduct<span style='color:#e0e0c0; '>(</span>ToPixel<span style='color:#e0e0c0; '>,</span> ToPixel<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+                <span style='color:#a08050; '>float</span> radius <span style='color:#e0e0c0; '>=</span> Dot <span style='color:#e0e0c0; '>*</span> dRadius<span style='color:#f0e080; '>;</span>
+                <span style='color:#a08050; '>float</span> distance <span style='color:#e0e0c0; '>=</span> <span style='color:#906030; '>sqrt</span><span style='color:#e0e0c0; '>(</span>distanceSq<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+                <span style='color:#a08050; '>float</span> s <span style='color:#e0e0c0; '>=</span> distance <span style='color:#e0e0c0; '>/</span> lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>radius<span style='color:#f0e080; '>;</span>
 
-                <span style='color:#008000; '>//leave early if the current pixel is outside the light sources radius</span>
-                <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>s <span style='color:#0000ff; '>></span><span style='color:#0000ff; '>=</span> <span style='color:#800080; '>1.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>)</span>
-                    <span style='color:#0000ff; '>return</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
+                <span style='color:#696989; '>//leave early if the current pixel is outside the light sources radius</span>
+                <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>s <span style='color:#e0e0c0; '>></span><span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>1.0</span><span style='color:#006000; '>f</span><span style='color:#e0e0c0; '>)</span>
+                    <span style='color:#a08050; '>return</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
 
-                <span style='color:#0000ff; '>float</span> s2 <span style='color:#0000ff; '>=</span> s <span style='color:#0000ff; '>*</span> s<span style='color:#0000ff; '>;</span>
-                <span style='color:#0000ff; '>float</span> emitterDistance <span style='color:#0000ff; '>=</span> lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>intensity <span style='color:#0000ff; '>*</span> <span style='color:#0000ff; '>pow</span><span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>(</span><span style='color:#800080; '>1</span> <span style='color:#0000ff; '>-</span> s2<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>,</span> <span style='color:#800080; '>2</span><span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>/</span> <span style='color:#0000ff; '>(</span><span style='color:#800080; '>1</span> <span style='color:#0000ff; '>+</span> lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>radialFalloff <span style='color:#0000ff; '>*</span> s<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-                <span style='color:#0000ff; '>float</span> frustumDistance <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>radius <span style='color:#0000ff; '>-</span> <span style='color:#0000ff; '>(</span>fabsf<span style='color:#0000ff; '>(</span>Vector2<span style='color:#0000ff; '>::</span>DotProduct<span style='color:#0000ff; '>(</span>emissionTangent<span style='color:#0000ff; '>,</span> ToPixel<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
+                <span style='color:#a08050; '>float</span> s2 <span style='color:#e0e0c0; '>=</span> s <span style='color:#e0e0c0; '>*</span> s<span style='color:#f0e080; '>;</span>
+                <span style='color:#a08050; '>float</span> emitterDistance <span style='color:#e0e0c0; '>=</span> lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>intensity <span style='color:#e0e0c0; '>*</span> <span style='color:#906030; '>pow</span><span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>(</span><span style='color:#00d000; '>1</span> <span style='color:#e0e0c0; '>-</span> s2<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>,</span> <span style='color:#00d000; '>2</span><span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>/</span> <span style='color:#e0e0c0; '>(</span><span style='color:#00d000; '>1</span> <span style='color:#e0e0c0; '>+</span> lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>radialFalloff <span style='color:#e0e0c0; '>*</span> s<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+                <span style='color:#a08050; '>float</span> frustumDistance <span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>radius <span style='color:#e0e0c0; '>-</span> <span style='color:#e0e0c0; '>(</span>fabsf<span style='color:#e0e0c0; '>(</span>Vector2<span style='color:#f0e080; '>::</span>DotProduct<span style='color:#e0e0c0; '>(</span>emissionTangent<span style='color:#e0e0c0; '>,</span> ToPixel<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
         
-                <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>frustumDistance <span style='color:#0000ff; '>&lt;</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>)</span>
-                <span style='color:#0000ff; '>{</span>
-                    frustumDistance <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
-                <span style='color:#0000ff; '>}</span>
-                <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>frustumDistance <span style='color:#0000ff; '>></span> radius<span style='color:#0000ff; '>)</span>
-                <span style='color:#0000ff; '>{</span>
-                    frustumDistance <span style='color:#0000ff; '>=</span> radius<span style='color:#0000ff; '>;</span>
-                <span style='color:#0000ff; '>}</span>
-                result <span style='color:#0000ff; '>=</span> emitterDistance <span style='color:#0000ff; '>*</span> <span style='color:#0000ff; '>(</span>frustumDistance <span style='color:#0000ff; '>*</span> lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>frustumWeight<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-            <span style='color:#0000ff; '>}</span>
-        <span style='color:#0000ff; '>}</span> <span style='color:#0000ff; '>break</span><span style='color:#0000ff; '>;</span>
+                <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>frustumDistance <span style='color:#e0e0c0; '>&lt;</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#e0e0c0; '>)</span>
+                <span style='color:#f0e080; '>{</span>
+                    frustumDistance <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
+                <span style='color:#f0e080; '>}</span>
+                <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>frustumDistance <span style='color:#e0e0c0; '>></span> radius<span style='color:#e0e0c0; '>)</span>
+                <span style='color:#f0e080; '>{</span>
+                    frustumDistance <span style='color:#e0e0c0; '>=</span> radius<span style='color:#f0e080; '>;</span>
+                <span style='color:#f0e080; '>}</span>
+                result <span style='color:#e0e0c0; '>=</span> emitterDistance <span style='color:#e0e0c0; '>*</span> <span style='color:#e0e0c0; '>(</span>frustumDistance <span style='color:#e0e0c0; '>*</span> lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>frustumWeight<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+            <span style='color:#f0e080; '>}</span>
+        <span style='color:#f0e080; '>}</span> <span style='color:#a08050; '>break</span><span style='color:#f0e080; '>;</span>
 
-<span style='color:#808000; '>        </span><span style='color:#0000ff; '>default</span><span style='color:#808000; '>:</span>
-        <span style='color:#0000ff; '>{</span>
-            assert<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>!</span><span style='color:#ff0000; '>"</span><span style='color:#800000; '>Encountered a light source of an unknown type.</span><span style='color:#ff0000; '>"</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-        <span style='color:#0000ff; '>}</span> <span style='color:#0000ff; '>break</span><span style='color:#0000ff; '>;</span>
-    <span style='color:#0000ff; '>}</span>
+<span style='color:#a34adc; text-decoration:underline; '>        </span><span style='color:#a08050; text-decoration:underline; '>default</span><span style='color:#a34adc; text-decoration:underline; '>:</span>
+        <span style='color:#f0e080; '>{</span>
+            assert<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>!</span><span style='color:#d020a0; '>"</span><span style='color:#cc5555; '>Encountered a light source of an unknown type.</span><span style='color:#d020a0; '>"</span><span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+        <span style='color:#f0e080; '>}</span> <span style='color:#a08050; '>break</span><span style='color:#f0e080; '>;</span>
+    <span style='color:#f0e080; '>}</span>
 
-    <span style='color:#008000; '>//Do normal map calculations if light isnt pure dark</span>
-    <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>result <span style='color:#0000ff; '>></span> <span style='color:#800080; '>0</span><span style='color:#0000ff; '>)</span>
-    <span style='color:#0000ff; '>{</span>
-        <span style='color:#008000; '>//get normal maps "surface normal" from the r and g component of the normal buffer</span>
-        <span style='color:#0000ff; '>float</span> normalR <span style='color:#0000ff; '>=</span> normalBuffer<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>SampleColor<span style='color:#0000ff; '>(</span>x<span style='color:#0000ff; '>,</span> y<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>.</span>r<span style='color:#0000ff; '>;</span>
-        <span style='color:#0000ff; '>float</span> normalG <span style='color:#0000ff; '>=</span> normalBuffer<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>SampleColor<span style='color:#0000ff; '>(</span>x<span style='color:#0000ff; '>,</span> y<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>.</span>g<span style='color:#0000ff; '>;</span>
+    <span style='color:#696989; '>//Do normal map calculations if light isnt pure dark</span>
+    <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>result <span style='color:#e0e0c0; '>></span> <span style='color:#00d000; '>0</span><span style='color:#e0e0c0; '>)</span>
+    <span style='color:#f0e080; '>{</span>
+        <span style='color:#696989; '>//get normal maps "surface normal" from the r and g component of the normal buffer</span>
+        <span style='color:#a08050; '>float</span> normalR <span style='color:#e0e0c0; '>=</span> normalBuffer<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>SampleColor<span style='color:#e0e0c0; '>(</span>x<span style='color:#e0e0c0; '>,</span> y<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>.</span>r<span style='color:#f0e080; '>;</span>
+        <span style='color:#a08050; '>float</span> normalG <span style='color:#e0e0c0; '>=</span> normalBuffer<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>SampleColor<span style='color:#e0e0c0; '>(</span>x<span style='color:#e0e0c0; '>,</span> y<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>.</span>g<span style='color:#f0e080; '>;</span>
 
-        <span style='color:#008000; '>//if surface is facing camera return early as the normal has no effect on the light here</span>
-        <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>normalR <span style='color:#0000ff; '>=</span><span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0</span> <span style='color:#0000ff; '>&amp;</span><span style='color:#0000ff; '>&amp;</span> normalG <span style='color:#0000ff; '>=</span><span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0</span><span style='color:#0000ff; '>)</span>
-        <span style='color:#0000ff; '>{</span>
-            <span style='color:#0000ff; '>return</span> result<span style='color:#0000ff; '>;</span>
-        <span style='color:#0000ff; '>}</span>
+        <span style='color:#696989; '>//if surface is facing camera return early as the normal has no effect on the light here</span>
+        <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>normalR <span style='color:#e0e0c0; '>=</span><span style='color:#e0e0c0; '>=</span> <span style='color:#00d000; '>0</span> <span style='color:#e0e0c0; '>&amp;</span><span style='color:#e0e0c0; '>&amp;</span> normalG <span style='color:#e0e0c0; '>=</span><span style='color:#e0e0c0; '>=</span> <span style='color:#00d000; '>0</span><span style='color:#e0e0c0; '>)</span>
+        <span style='color:#f0e080; '>{</span>
+            <span style='color:#a08050; '>return</span> result<span style='color:#f0e080; '>;</span>
+        <span style='color:#f0e080; '>}</span>
 
-        <span style='color:#008000; '>//calculate the normals effect on current pixel</span>
-        Vector2 pos <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>Vector2<span style='color:#0000ff; '>(</span>x<span style='color:#0000ff; '>,</span> y<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-        Vector2 distFromLight <span style='color:#0000ff; '>=</span> lightP <span style='color:#0000ff; '>-</span> pos<span style='color:#0000ff; '>;</span>
-        Vector2 distNormalized <span style='color:#0000ff; '>=</span> distFromLight<span style='color:#0000ff; '>.</span>Normalize<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-        Vector2 normalDir <span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>{</span>normalR <span style='color:#0000ff; '>*</span> ONE_OVER_255<span style='color:#0000ff; '>,</span> normalG <span style='color:#0000ff; '>*</span> ONE_OVER_255<span style='color:#0000ff; '>}</span><span style='color:#0000ff; '>;</span>
-        normalDir <span style='color:#0000ff; '>*</span><span style='color:#0000ff; '>=</span> <span style='color:#800080; '>2</span><span style='color:#0000ff; '>;</span>
-        normalDir <span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>=</span> Vector2<span style='color:#0000ff; '>{</span><span style='color:#800080; '>1</span><span style='color:#0000ff; '>,</span> <span style='color:#800080; '>1</span><span style='color:#0000ff; '>}</span><span style='color:#0000ff; '>;</span>
-        <span style='color:#0000ff; '>float</span> normalFalloff <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>-</span>Vector2<span style='color:#0000ff; '>::</span>DotProduct<span style='color:#0000ff; '>(</span>distNormalized<span style='color:#0000ff; '>,</span> normalDir<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-        normalFalloff <span style='color:#0000ff; '>+</span><span style='color:#0000ff; '>=</span> normalMin<span style='color:#0000ff; '>;</span>
-        normalFalloff <span style='color:#0000ff; '>=</span> clamp<span style='color:#0000ff; '>(</span>normalFalloff<span style='color:#0000ff; '>,</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>,</span> <span style='color:#800080; '>1.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-        result <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>normalFalloff <span style='color:#0000ff; '>*</span> normalStrength <span style='color:#0000ff; '>*</span> result<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-    <span style='color:#0000ff; '>}</span>
+        <span style='color:#696989; '>//calculate the normals effect on current pixel</span>
+        Vector2 pos <span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>Vector2<span style='color:#e0e0c0; '>(</span>x<span style='color:#e0e0c0; '>,</span> y<span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+        Vector2 distFromLight <span style='color:#e0e0c0; '>=</span> lightP <span style='color:#e0e0c0; '>-</span> pos<span style='color:#f0e080; '>;</span>
+        Vector2 distNormalized <span style='color:#e0e0c0; '>=</span> distFromLight<span style='color:#e0e0c0; '>.</span>Normalize<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+        Vector2 normalDir <span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#f0e080; '>{</span>normalR <span style='color:#e0e0c0; '>*</span> ONE_OVER_255<span style='color:#e0e0c0; '>,</span> normalG <span style='color:#e0e0c0; '>*</span> ONE_OVER_255<span style='color:#f0e080; '>}</span><span style='color:#f0e080; '>;</span>
+        normalDir <span style='color:#e0e0c0; '>*</span><span style='color:#e0e0c0; '>=</span> <span style='color:#00d000; '>2</span><span style='color:#f0e080; '>;</span>
+        normalDir <span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>=</span> Vector2<span style='color:#f0e080; '>{</span><span style='color:#00d000; '>1</span><span style='color:#e0e0c0; '>,</span> <span style='color:#00d000; '>1</span><span style='color:#f0e080; '>}</span><span style='color:#f0e080; '>;</span>
+        <span style='color:#a08050; '>float</span> normalFalloff <span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>-</span>Vector2<span style='color:#f0e080; '>::</span>DotProduct<span style='color:#e0e0c0; '>(</span>distNormalized<span style='color:#e0e0c0; '>,</span> normalDir<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+        normalFalloff <span style='color:#e0e0c0; '>+</span><span style='color:#e0e0c0; '>=</span> normalMin<span style='color:#f0e080; '>;</span>
+        normalFalloff <span style='color:#e0e0c0; '>=</span> clamp<span style='color:#e0e0c0; '>(</span>normalFalloff<span style='color:#e0e0c0; '>,</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#e0e0c0; '>,</span> <span style='color:#00e800; '>1.0</span><span style='color:#006000; '>f</span><span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+        result <span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>normalFalloff <span style='color:#e0e0c0; '>*</span> normalStrength <span style='color:#e0e0c0; '>*</span> result<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+    <span style='color:#f0e080; '>}</span>
 
-    <span style='color:#0000ff; '>return</span> result<span style='color:#0000ff; '>;</span>
-<span style='color:#0000ff; '>}</span>
+    <span style='color:#a08050; '>return</span> result<span style='color:#f0e080; '>;</span>
+<span style='color:#f0e080; '>}</span>
 
-<span style='color:#008000; '>//Loop over every pixel and calculate each pixels rgb value</span>
-<span style='color:#0000ff; '>void</span> Renderer<span style='color:#0000ff; '>::</span>RenderLightingPass<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>)</span>
-<span style='color:#0000ff; '>{</span>
-    <span style='color:#0000ff; '>const</span> <span style='color:#0000ff; '>int</span> xSize <span style='color:#0000ff; '>=</span> outputBuffer<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>size<span style='color:#0000ff; '>.</span>x<span style='color:#0000ff; '>;</span>
-    <span style='color:#0000ff; '>const</span> <span style='color:#0000ff; '>int</span> ySize <span style='color:#0000ff; '>=</span> outputBuffer<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>size<span style='color:#0000ff; '>.</span>y<span style='color:#0000ff; '>;</span>
+<span style='color:#696989; '>//Loop over every pixel and calculate each pixels rgb value</span>
+<span style='color:#a08050; '>void</span> Renderer<span style='color:#f0e080; '>::</span>RenderLightingPass<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>)</span>
+<span style='color:#f0e080; '>{</span>
+    <span style='color:#a08050; '>const</span> <span style='color:#a08050; '>int</span> xSize <span style='color:#e0e0c0; '>=</span> outputBuffer<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>size<span style='color:#e0e0c0; '>.</span>x<span style='color:#f0e080; '>;</span>
+    <span style='color:#a08050; '>const</span> <span style='color:#a08050; '>int</span> ySize <span style='color:#e0e0c0; '>=</span> outputBuffer<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>size<span style='color:#e0e0c0; '>.</span>y<span style='color:#f0e080; '>;</span>
 
-    <span style='color:#0000ff; '>float</span> lightMultiplier <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
+    <span style='color:#a08050; '>float</span> lightMultiplier <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
 
-    <span style='color:#0000ff; '>float</span> intensityR <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
-    <span style='color:#0000ff; '>float</span> intensityG <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
-    <span style='color:#0000ff; '>float</span> intensityB <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
+    <span style='color:#a08050; '>float</span> intensityR <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
+    <span style='color:#a08050; '>float</span> intensityG <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
+    <span style='color:#a08050; '>float</span> intensityB <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
 
-<span style='color:#008000; '>//create a threadpool</span>
-<span style='color:#0000ff; '>#</span><span style='color:#0000ff; background:#c0c0c0; '>pragma</span><span style='color:#0000ff; background:#c0c0c0; '> omp parallel</span>
-    <span style='color:#0000ff; '>{</span>
-<span style='color:#008000; '>//create tasks for threads, make each take one index of the next three loops,</span>
-<span style='color:#008000; '>//dont have them wait for other threads to finish, assign private variables</span>
-<span style='color:#0000ff; '>#</span><span style='color:#0000ff; background:#c0c0c0; '>pragma</span><span style='color:#0000ff; background:#c0c0c0; '> omp for collapse(3) nowait private(lightMultiplier, intensityR, intensityG, intensityB)</span>
-        <span style='color:#0000ff; '>for</span> <span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>int</span> x <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0</span><span style='color:#0000ff; '>;</span> x <span style='color:#0000ff; '>&lt;</span> xSize<span style='color:#0000ff; '>;</span> <span style='color:#0000ff; '>+</span><span style='color:#0000ff; '>+</span>x<span style='color:#0000ff; '>)</span>
-        <span style='color:#0000ff; '>{</span>
-            <span style='color:#0000ff; '>for</span> <span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>int</span> y <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0</span><span style='color:#0000ff; '>;</span> y <span style='color:#0000ff; '>&lt;</span> ySize<span style='color:#0000ff; '>;</span> <span style='color:#0000ff; '>+</span><span style='color:#0000ff; '>+</span>y<span style='color:#0000ff; '>)</span>
-            <span style='color:#0000ff; '>{</span>
-                intensityR <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
-                intensityG <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
-                intensityB <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0.0</span><span style='color:#800080; '>f</span><span style='color:#0000ff; '>;</span>
+<span style='color:#696989; '>//create a threadpool</span>
+<span style='color:#009ac3; '>#</span><span style='color:#009ac3; font-weight:bold; '>pragma</span><span style='color:#bb7977; font-weight:bold; '> omp parallel</span>
+    <span style='color:#f0e080; '>{</span>
+<span style='color:#696989; '>//create tasks for threads, make each take one index of the next three loops,</span>
+<span style='color:#696989; '>//dont have them wait for other threads to finish, assign private variables</span>
+<span style='color:#009ac3; '>#</span><span style='color:#009ac3; font-weight:bold; '>pragma</span><span style='color:#bb7977; font-weight:bold; '> omp for collapse(3) nowait private(lightMultiplier, intensityR, intensityG, intensityB)</span>
+        <span style='color:#a08050; '>for</span> <span style='color:#e0e0c0; '>(</span><span style='color:#a08050; '>int</span> x <span style='color:#e0e0c0; '>=</span> <span style='color:#00d000; '>0</span><span style='color:#f0e080; '>;</span> x <span style='color:#e0e0c0; '>&lt;</span> xSize<span style='color:#f0e080; '>;</span> <span style='color:#e0e0c0; '>+</span><span style='color:#e0e0c0; '>+</span>x<span style='color:#e0e0c0; '>)</span>
+        <span style='color:#f0e080; '>{</span>
+            <span style='color:#a08050; '>for</span> <span style='color:#e0e0c0; '>(</span><span style='color:#a08050; '>int</span> y <span style='color:#e0e0c0; '>=</span> <span style='color:#00d000; '>0</span><span style='color:#f0e080; '>;</span> y <span style='color:#e0e0c0; '>&lt;</span> ySize<span style='color:#f0e080; '>;</span> <span style='color:#e0e0c0; '>+</span><span style='color:#e0e0c0; '>+</span>y<span style='color:#e0e0c0; '>)</span>
+            <span style='color:#f0e080; '>{</span>
+                intensityR <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
+                intensityG <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
+                intensityB <span style='color:#e0e0c0; '>=</span> <span style='color:#00e800; '>0.0</span><span style='color:#006000; '>f</span><span style='color:#f0e080; '>;</span>
 
-                <span style='color:#0000ff; '>for</span> <span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>int</span> i <span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0</span><span style='color:#0000ff; '>;</span> i <span style='color:#0000ff; '>&lt;</span> numLights<span style='color:#0000ff; '>;</span> <span style='color:#0000ff; '>+</span><span style='color:#0000ff; '>+</span>i<span style='color:#0000ff; '>)</span>
-                <span style='color:#0000ff; '>{</span>
-                    <span style='color:#008000; '>//see if pixel is lit before running expensive lighting calculations</span>
-                    <span style='color:#008000; '>//this saves time over running lighting calculations on unlit pixels</span>
-                    <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>CalculateIfPixelIsLit<span style='color:#0000ff; '>(</span>x<span style='color:#0000ff; '>,</span> y<span style='color:#0000ff; '>,</span> i<span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>=</span><span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>true</span><span style='color:#0000ff; '>)</span>
-                    <span style='color:#0000ff; '>{</span>
-                        Light<span style='color:#0000ff; '>*</span> lightSource <span style='color:#0000ff; '>=</span> lightSource <span style='color:#0000ff; '>+</span> i<span style='color:#0000ff; '>;</span>
-                        lightMultiplier <span style='color:#0000ff; '>=</span> FindPixelLuminosity<span style='color:#0000ff; '>(</span>x<span style='color:#0000ff; '>,</span> y<span style='color:#0000ff; '>,</span> lightSource<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
+                <span style='color:#a08050; '>for</span> <span style='color:#e0e0c0; '>(</span><span style='color:#a08050; '>int</span> i <span style='color:#e0e0c0; '>=</span> <span style='color:#00d000; '>0</span><span style='color:#f0e080; '>;</span> i <span style='color:#e0e0c0; '>&lt;</span> numLights<span style='color:#f0e080; '>;</span> <span style='color:#e0e0c0; '>+</span><span style='color:#e0e0c0; '>+</span>i<span style='color:#e0e0c0; '>)</span>
+                <span style='color:#f0e080; '>{</span>
+                    <span style='color:#696989; '>//see if pixel is lit before running expensive lighting calculations</span>
+                    <span style='color:#696989; '>//this saves time over running lighting calculations on unlit pixels</span>
+                    <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>CalculateIfPixelIsLit<span style='color:#e0e0c0; '>(</span>x<span style='color:#e0e0c0; '>,</span> y<span style='color:#e0e0c0; '>,</span> i<span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>=</span><span style='color:#e0e0c0; '>=</span> <span style='color:#a08050; '>true</span><span style='color:#e0e0c0; '>)</span>
+                    <span style='color:#f0e080; '>{</span>
+                        Light<span style='color:#e0e0c0; '>*</span> lightSource <span style='color:#e0e0c0; '>=</span> lightSource <span style='color:#e0e0c0; '>+</span> i<span style='color:#f0e080; '>;</span>
+                        lightMultiplier <span style='color:#e0e0c0; '>=</span> FindPixelLuminosity<span style='color:#e0e0c0; '>(</span>x<span style='color:#e0e0c0; '>,</span> y<span style='color:#e0e0c0; '>,</span> lightSource<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
 
-                        <span style='color:#0000ff; '>if</span> <span style='color:#0000ff; '>(</span>lightMultiplier <span style='color:#0000ff; '>!</span><span style='color:#0000ff; '>=</span> <span style='color:#800080; '>0</span><span style='color:#0000ff; '>)</span>
-                        <span style='color:#0000ff; '>{</span>
-                            <span style='color:#008000; '>//convert from 0 - 255 into 0 - 1</span>
-                            <span style='color:#0000ff; '>float</span> R_F32 <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>color<span style='color:#0000ff; '>.</span>GetRed<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>*</span> ONE_OVER_255<span style='color:#0000ff; '>;</span>
-                            <span style='color:#0000ff; '>float</span> G_F32 <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>color<span style='color:#0000ff; '>.</span>GetGreen<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>*</span> ONE_OVER_255<span style='color:#0000ff; '>;</span>
-                            <span style='color:#0000ff; '>float</span> B_F32 <span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>lightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>color<span style='color:#0000ff; '>.</span>GetBlue<span style='color:#0000ff; '>(</span><span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>)</span> <span style='color:#0000ff; '>*</span> ONE_OVER_255<span style='color:#0000ff; '>;</span>
+                        <span style='color:#a08050; '>if</span> <span style='color:#e0e0c0; '>(</span>lightMultiplier <span style='color:#e0e0c0; '>!</span><span style='color:#e0e0c0; '>=</span> <span style='color:#00d000; '>0</span><span style='color:#e0e0c0; '>)</span>
+                        <span style='color:#f0e080; '>{</span>
+                            <span style='color:#696989; '>//convert from 0 - 255 into 0 - 1</span>
+                            <span style='color:#a08050; '>float</span> R_F32 <span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>color<span style='color:#e0e0c0; '>.</span>GetRed<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>*</span> ONE_OVER_255<span style='color:#f0e080; '>;</span>
+                            <span style='color:#a08050; '>float</span> G_F32 <span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>color<span style='color:#e0e0c0; '>.</span>GetGreen<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>*</span> ONE_OVER_255<span style='color:#f0e080; '>;</span>
+                            <span style='color:#a08050; '>float</span> B_F32 <span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>lightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>color<span style='color:#e0e0c0; '>.</span>GetBlue<span style='color:#e0e0c0; '>(</span><span style='color:#e0e0c0; '>)</span><span style='color:#e0e0c0; '>)</span> <span style='color:#e0e0c0; '>*</span> ONE_OVER_255<span style='color:#f0e080; '>;</span>
                         
-                            <span style='color:#008000; '>//multiply by volumetric intesity to simulate fog</span>
-                            <span style='color:#008000; '>//this lets you see the light beam itself</span>
-                            lightMultiplier <span style='color:#0000ff; '>*</span><span style='color:#0000ff; '>=</span> LightSource<span style='color:#0000ff; '>-</span><span style='color:#0000ff; '>></span>volumetricIntensity<span style='color:#0000ff; '>;</span>
+                            <span style='color:#696989; '>//multiply by volumetric intesity to simulate fog</span>
+                            <span style='color:#696989; '>//this lets you see the light beam itself</span>
+                            lightMultiplier <span style='color:#e0e0c0; '>*</span><span style='color:#e0e0c0; '>=</span> LightSource<span style='color:#e0e0c0; '>-</span><span style='color:#e0e0c0; '>></span>volumetricIntensity<span style='color:#f0e080; '>;</span>
 
-                            <span style='color:#008000; '>//multiply the intensity of the light by the underlying pixel color</span>
-                            intensityR <span style='color:#0000ff; '>+</span><span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>lightMultiplier <span style='color:#0000ff; '>*</span> R_F32<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-                            intensityG <span style='color:#0000ff; '>+</span><span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>lightMultiplier <span style='color:#0000ff; '>*</span> G_F32<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-                            intensityB <span style='color:#0000ff; '>+</span><span style='color:#0000ff; '>=</span> <span style='color:#0000ff; '>(</span>lightMultiplier <span style='color:#0000ff; '>*</span> B_F32<span style='color:#0000ff; '>)</span><span style='color:#0000ff; '>;</span>
-                        <span style='color:#0000ff; '>}</span>
-                    <span style='color:#0000ff; '>}</span>
-                <span style='color:#0000ff; '>}</span>
+                            <span style='color:#696989; '>//multiply the intensity of the light by the underlying pixel color</span>
+                            intensityR <span style='color:#e0e0c0; '>+</span><span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>lightMultiplier <span style='color:#e0e0c0; '>*</span> R_F32<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+                            intensityG <span style='color:#e0e0c0; '>+</span><span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>lightMultiplier <span style='color:#e0e0c0; '>*</span> G_F32<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+                            intensityB <span style='color:#e0e0c0; '>+</span><span style='color:#e0e0c0; '>=</span> <span style='color:#e0e0c0; '>(</span>lightMultiplier <span style='color:#e0e0c0; '>*</span> B_F32<span style='color:#e0e0c0; '>)</span><span style='color:#f0e080; '>;</span>
+                        <span style='color:#f0e080; '>}</span>
+                    <span style='color:#f0e080; '>}</span>
+                <span style='color:#f0e080; '>}</span>
 
-                <span style='color:#008000; '>//store result in pixel array</span>
-                lightR<span style='color:#0000ff; '>[</span>x<span style='color:#0000ff; '>]</span><span style='color:#0000ff; '>[</span>y<span style='color:#0000ff; '>]</span> <span style='color:#0000ff; '>=</span> intensityR<span style='color:#0000ff; '>;</span>
-                lightG<span style='color:#0000ff; '>[</span>x<span style='color:#0000ff; '>]</span><span style='color:#0000ff; '>[</span>y<span style='color:#0000ff; '>]</span> <span style='color:#0000ff; '>=</span> intensityG<span style='color:#0000ff; '>;</span>
-                lightB<span style='color:#0000ff; '>[</span>x<span style='color:#0000ff; '>]</span><span style='color:#0000ff; '>[</span>y<span style='color:#0000ff; '>]</span> <span style='color:#0000ff; '>=</span> intensityB<span style='color:#0000ff; '>;</span>
-            <span style='color:#0000ff; '>}</span>
-        <span style='color:#0000ff; '>}</span>
-    <span style='color:#0000ff; '>}</span>
-<span style='color:#0000ff; '>}</span>
-<!--Created using ToHTML.com on 2025-01-27 23:09:53 UTC -->
+                <span style='color:#696989; '>//store result in pixel array</span>
+                lightR<span style='color:#e0e0c0; '>[</span>x<span style='color:#e0e0c0; '>]</span><span style='color:#e0e0c0; '>[</span>y<span style='color:#e0e0c0; '>]</span> <span style='color:#e0e0c0; '>=</span> intensityR<span style='color:#f0e080; '>;</span>
+                lightG<span style='color:#e0e0c0; '>[</span>x<span style='color:#e0e0c0; '>]</span><span style='color:#e0e0c0; '>[</span>y<span style='color:#e0e0c0; '>]</span> <span style='color:#e0e0c0; '>=</span> intensityG<span style='color:#f0e080; '>;</span>
+                lightB<span style='color:#e0e0c0; '>[</span>x<span style='color:#e0e0c0; '>]</span><span style='color:#e0e0c0; '>[</span>y<span style='color:#e0e0c0; '>]</span> <span style='color:#e0e0c0; '>=</span> intensityB<span style='color:#f0e080; '>;</span>
+            <span style='color:#f0e080; '>}</span>
+        <span style='color:#f0e080; '>}</span>
+    <span style='color:#f0e080; '>}</span>
+<span style='color:#f0e080; '>}</span>
+<!--Created using ToHTML.com on 2025-01-27 23:12:22 UTC -->
 </code></pre>
 							</p>
 							<p></p>
