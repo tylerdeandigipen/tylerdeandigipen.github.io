@@ -199,7 +199,7 @@ void Renderer::RenderLightingPass()
 							float B_F32 = (lightSource->color.GetBlue()) * ONE_OVER_255;
 						
 							//multiply by volumetric intesity to simulate fog
-							//(lets you see the light beam itself)
+							//this lets you see the light beam itself
 							lightMultiplier *= LightSource->volumetricIntensity;
 
 							//multiply the intensity of the light by the underlying pixel color
