@@ -172,7 +172,8 @@ void Renderer::RenderLightingPass()
 //create a threadpool
 #pragma omp parallel
 	{
-//create tasks for threads, make each take one index of the next three loops, dont have them wait for other threads to finish, give private variables
+//create tasks for threads, make each take one index of the next three loops,
+//dont have them wait for other threads to finish, assign private variables
 #pragma omp for collapse(3) nowait private(lightMultiplier, intensityR, intensityG, intensityB)
 		for (int x = 0; x < xSize; ++x)
 		{
