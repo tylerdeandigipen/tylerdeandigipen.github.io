@@ -50,6 +50,8 @@
 
 								<h3>Code Sample</h3>
 								<pre><code>#DEFINE DEGREES_TO_RADIANS 0.01745329f //Precomputed degrees to radians conversion ratio
+#DEFINE ONE_OVER_255 0.00392156f //Precompute 1 / 255 for conversion from 0 - 255 into 0 - 1
+
 
 //calculate the given lightsource's effect on the current pixel
 float Renderer::FindPixelLuminosity(float x, float y, Light* lightSource)
@@ -67,8 +69,8 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* lightSource)
 			float distFromConeCenter = sqrt(Vector2::DotProduct(dist, dist)) / lightSource->radius;
 
 			//if the current pixel is outside the lights radius
-			if (distFromConeCenter >= 1.0)
-				return 0.0;
+			if (distFromConeCenter >= 1.0f)
+				return 0.0f;
 
 			float distFromConeCenterSquared = distFromConeCenter * distFromConeCenter;
 			result = lightSource->intensity * pow((1 - distFromConeCenterSquared), 2) / (1 + lightSource->radialFalloff * distFromConeCenter);
@@ -99,8 +101,8 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* lightSource)
 				float s = distance / lightSource->radius;
 
 				//leave early if the current pixel is outside the light sources radius
-				if (s >= 1.0)
-					return 0.0;
+				if (s >= 1.0f)
+					return 0.0f;
 
 				float s2 = s * s;
 				float emitterDistance = lightSource->intensity * pow((1 - s2), 2) / (1 + lightSource->radialFalloff * s);
@@ -181,21 +183,22 @@ void Renderer::RenderLightingPass()
 
 				for (int i = 0; i < numLights; ++i)
 				{
-					if (CalculateIfPixelIsLit(x, y, i) == true || doFog == true)
+					if (CalculateIfPixelIsLit(x, y, i) == true)
 					{
 						Light* lightSource = lightSource + i;
 						lightMultiplier = FindPixelLuminosity(x, y, lightSource);
 
 						if (lightMultiplier != 0)
 						{
-							//convert from 0 - 255 to 0 - 1
-							float R_F32 = (lightSource->color.GetRed()) * OneOver255;
-							float G_F32 = (lightSource->color.GetGreen()) * OneOver255;
-							float B_F32 = (lightSource->color.GetBlue()) * OneOver255;
+							//convert from 0 - 255 into 0 - 1
+							float R_F32 = (lightSource->color.GetRed()) * ONE_OVER_255;
+							float G_F32 = (lightSource->color.GetGreen()) * ONE_OVER_255;
+							float B_F32 = (lightSource->color.GetBlue()) * ONE_OVER_255;
 						
+							//multiply by volumetric intesity to simulate fog (lets you see the light beam itself)
 							lightMultiplier *= LightSource->volumetricIntensity;
 
-							//multiply by volumetric intesity to simulate fog (lets you see the light beam itself)
+							//multiply the intensity of the light by the underlying pixel color
 							intensityR += (lightMultiplier * R_F32);
 							intensityG += (lightMultiplier * G_F32);
 							intensityB += (lightMultiplier * B_F32);
@@ -203,6 +206,7 @@ void Renderer::RenderLightingPass()
 					}
 				}
 
+				//store result in pixel array
 				lightR[x][y] = intensityR;
 				lightG[x][y] = intensityG;
 				lightB[x][y] = intensityB;
