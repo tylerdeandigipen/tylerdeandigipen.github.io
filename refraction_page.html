@@ -78,6 +78,7 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* lightSource)
 
 		case LightSourceType_Directional:
 		{
+			//convert angle from degrees to radians
 			float AngleRadians = DEGREES_TO_RADIANS * -lightSource->angle;
 			float MinAngleRadians = DEGREES_TO_RADIANS * -lightSource->minAngle;
 			float MaxAngleRadians = DEGREES_TO_RADIANS * -lightSource->maxAngle;
@@ -87,17 +88,18 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* lightSource)
 			Vector2 FrustumRightEdge = Vector2(-sinf(MaxAngleRadians), cosf(MaxAngleRadians));
 			float dRadius = Vector2::Length(FrustumRightEdge - FrustumLeftEdge);
 
+			//find the viewcones direction and tangent lines
 			Vector2 EmissionDirection = Vector2(-sinf(AngleRadians), cosf(AngleRadians));
 			Vector2 EmissionTangent = Vector2(-EmissionDirection.y, EmissionDirection.x);
 			Vector2 ToPixel = Vector2(x, y) - lightP;
 
+			//find and check if current pixel is inside the lights viewcone
 			float Dot = Vector2::DotProduct(ToPixel, EmissionDirection);
-			//check if current pixel is inside the lights viewcone
 			if (Dot > 0.0f)
 			{
-				float DistanceSq = Vector2::DotProduct(ToPixel, ToPixel);
-				float Radius = Dot * dRadius;
-				float distance = sqrt(DistanceSq);
+				float distanceSq = Vector2::DotProduct(ToPixel, ToPixel);
+				float radius = Dot * dRadius;
+				float distance = sqrt(distanceSq);
 				float s = distance / lightSource->radius;
 
 				//leave early if the current pixel is outside the light sources radius
@@ -106,15 +108,15 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* lightSource)
 
 				float s2 = s * s;
 				float emitterDistance = lightSource->intensity * pow((1 - s2), 2) / (1 + lightSource->radialFalloff * s);
-				float frustumDistance = (Radius - (fabsf(Vector2::DotProduct(emissionTangent, ToPixel))));
+				float frustumDistance = (radius - (fabsf(Vector2::DotProduct(emissionTangent, ToPixel))));
 		
 				if (frustumDistance < 0.0f)
 				{
 					frustumDistance = 0.0f;
 				}
-				if (frustumDistance > Radius)
+				if (frustumDistance > radius)
 				{
-					frustumDistance = Radius;
+					frustumDistance = radius;
 				}
 				result = emitterDistance * (frustumDistance * lightSource->frustumWeight);
 			}
@@ -129,28 +131,27 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* lightSource)
 	//Do normal map calculations if light isnt pure dark
 	if (result > 0)
 	{
-		if (x + CameraP.x <= normalBuffer->BufferSizeX && x + CameraP.x >= 0 && y + CameraP.y <= normalBuffer->BufferSizeY && y + CameraP.y >= 0)
+		//get normal maps "surface normal" from the r and g component of the normal buffer
+		float normalR = normalBuffer->SampleColor(x, y).r;
+		float normalG = normalBuffer->SampleColor(x, y).g;
+
+		//if surface is facing camera return early as the normal has no effect on the light here
+		if (normalR == 0 && normalG == 0)
 		{
-			float normalR = normalBuffer->SampleColor(x + CameraP.x, y + CameraP.y).r;
-			float normalG = normalBuffer->SampleColor(x + CameraP.x, y + CameraP.y).g;
-
-			if (normalR == 0 && normalG == 0)
-			{
-				return result;
-			}
-
-			Vector2 pos = (Vector2(x, y));
-			Vector2 distFromLight = lightP - pos;
-			Vector2 distNormalized;
-			Vector2 normalDir = Vector2{ normalR / 255.0f, normalG / 255.0f };
-			normalDir *= 2;
-			normalDir -= Vector2{ 1,1 };
-			distNormalized.Normalize(distNormalized, distFromLight);
-			float normalFalloff = -Vector2::DotProduct(distNormalized, normalDir);
-			normalFalloff += normalMin;
-			normalFalloff = clamp(normalFalloff, 0.0f, 1.0f);
-			result = (normalFalloff * normalStrength * result);
+			return result;
 		}
+
+		//calculate the normals effect on current pixel
+		Vector2 pos = (Vector2(x, y));
+		Vector2 distFromLight = lightP - pos;
+		Vector2 distNormalized = distFromLight.Normalize();
+		Vector2 normalDir = Vector2{normalR * ONE_OVER_255, normalG * ONE_OVER_255};
+		normalDir *= 2;
+		normalDir -= Vector2{1, 1};
+		float normalFalloff = -Vector2::DotProduct(distNormalized, normalDir);
+		normalFalloff += normalMin;
+		normalFalloff = clamp(normalFalloff, 0.0f, 1.0f);
+		result = (normalFalloff * normalStrength * result);
 	}
 
 	return result;
