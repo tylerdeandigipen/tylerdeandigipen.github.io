@@ -16,10 +16,9 @@
 
 		<!-- Header -->
 			<header id="header">
-				<a href="index.html" class="title">Hyperspace</a>
+				<a href="index.html" class="title"></a>
 				<nav>
 					<ul>
-						<li><a href="index.html">Home</a></li>
 						<li><a href="refraction_page.html" class="active">Refraction</a></li>
 						<li><a href="elements.html">Elements</a></li>
 					</ul>
@@ -35,17 +34,17 @@
 							<h1 class="major">Making Refraction</h1>
 							<span class="image fit"><img src="images/LightingShowcase.gif" alt="" /></span>
 							<p>
-								Refraction is one of my favorite and one of the most challenging projects I've worked on yet. A fast cpu based lighting engine and renderer. Due to it being cpu based I had to do a lot of low 
-								level optimization. While looking at the memory used I realised that it was very cashe incoherant, in order to fix this
-								I made my own custom datatype for colors. This allowed them to be as small as possible so they could fit in the cashe. Another optimization I did was multi-threading the lighting calculations.
+								One of my favorite and most challenging projects to date is Refraction. A fast CPU-based lighting engine and renderer. Due to it being CPU-based, I had to do a lot of low 
+								level optimization. While looking at the memory used, I realized that it was very cache incoherent. In order to fix this
+								I made my own custom datatype for colors. This allowed them to be as small as possible so they could fit in the cache. Another optimization I did was multi-threading the lighting calculations.
 								With threads able to take a set of pixels and solve them in parallel, the program ran much more efficiently.<br />
 
 								<h3>How it works:</h3>
 								<ol>
-									<li>All objects and tilesets are merged together into one image (the normal maps are also merged into a seperate image).</li>
-									<li>For each light we then go over each pixel in its range and calcuate the lights strength, using the normal map to factor in the surface normal.</li>
-									<li>The individual lights strength are added together resulting in the total brightness.</li>
-									<li>We then apply any post prossessing effects, like dithering and scanlines.</li>
+									<li>All objects and tilesets are merged together into one image (the normal maps are also merged into a separate image).</li>
+									<li>For each light, we then go over each pixel in its range and calculate the light's strength, using the normal map to factor in the surface normal.</li>
+									<li>The individual lights strengths are added together, resulting in the total brightness.</li>
+									<li>We then apply any post-processing effects, like dithering and scanlines.</li>
 								</ol>
 
 								<h3>Code Sample</h3>
