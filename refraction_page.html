@@ -184,6 +184,8 @@ void Renderer::RenderLightingPass()
 
 				for (int i = 0; i < numLights; ++i)
 				{
+					//see if pixel is lit before running expensive lighting calculations
+					//this saves time over running lighting calculations on unlit pixels
 					if (CalculateIfPixelIsLit(x, y, i) == true)
 					{
 						Light* lightSource = lightSource + i;
