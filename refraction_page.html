@@ -49,35 +49,38 @@
 								</ol>
 
 								<h3>Code Sample</h3>
-								<pre><code>#DEFINE DEGREES_TO_RADIANS 0.01745329251994329577f //Precomputed degrees to radians conversion ratio
+								<pre><code>#DEFINE DEGREES_TO_RADIANS 0.01745329f //Precomputed degrees to radians conversion ratio
 
-float Renderer::FindPixelLuminosity(float x, float y, Light* LightSource)
+//calculate the given lightsource's effect on the current pixel
+float Renderer::FindPixelLuminosity(float x, float y, Light* lightSource)
 {
 	float normalMin = 0.75f;
-	Vector2 lightP = LightSource->position - CameraP;
+	Vector2 lightP = lightSource->position - CameraP;
 	float result = 0.0f;
 
 	//Determine which algorithm to use based on lightsource type
-	switch (LightSource->Type)
+	switch (lightSource->Type)
 	{
 		case LightSourceType_Point:
 		{
 			Vector2 dist = Vector2(x, y) - lightP;
-			float distFromConeCenter = sqrt(Vector2::DotProduct(dist, dist)) / LightSource->radius;
+			float distFromConeCenter = sqrt(Vector2::DotProduct(dist, dist)) / lightSource->radius;
 
+			//if the current pixel is outside the lights radius
 			if (distFromConeCenter >= 1.0)
 				return 0.0;
 
 			float distFromConeCenterSquared = distFromConeCenter * distFromConeCenter;
-			result = LightSource->intensity * pow((1 - distFromConeCenterSquared), 2) / (1 + LightSource->radialFalloff * distFromConeCenter);
+			result = lightSource->intensity * pow((1 - distFromConeCenterSquared), 2) / (1 + lightSource->radialFalloff * distFromConeCenter);
 		} break;
 
 		case LightSourceType_Directional:
 		{
-			float AngleRadians = DEGREES_TO_RADIANS * -LightSource->angle;
-			float MinAngleRadians = DEGREES_TO_RADIANS * -LightSource->minAngle;
-			float MaxAngleRadians = DEGREES_TO_RADIANS * -LightSource->maxAngle;
+			float AngleRadians = DEGREES_TO_RADIANS * -lightSource->angle;
+			float MinAngleRadians = DEGREES_TO_RADIANS * -lightSource->minAngle;
+			float MaxAngleRadians = DEGREES_TO_RADIANS * -lightSource->maxAngle;
 
+			//find edges of the viewcone
 			Vector2 FrustumLeftEdge = Vector2(-sinf(MinAngleRadians), cosf(MinAngleRadians));
 			Vector2 FrustumRightEdge = Vector2(-sinf(MaxAngleRadians), cosf(MaxAngleRadians));
 			float dRadius = Vector2::Length(FrustumRightEdge - FrustumLeftEdge);
@@ -87,29 +90,31 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* LightSource)
 			Vector2 ToPixel = Vector2(x, y) - lightP;
 
 			float Dot = Vector2::DotProduct(ToPixel, EmissionDirection);
+			//check if current pixel is inside the lights viewcone
 			if (Dot > 0.0f)
 			{
 				float DistanceSq = Vector2::DotProduct(ToPixel, ToPixel);
 				float Radius = Dot * dRadius;
 				float distance = sqrt(DistanceSq);
-				float s = distance / LightSource->radius;
+				float s = distance / lightSource->radius;
 
+				//leave early if the current pixel is outside the light sources radius
 				if (s >= 1.0)
 					return 0.0;
 
 				float s2 = s * s;
-				float EmitterDistance = LightSource->intensity * pow((1 - s2), 2) / (1 + LightSource->radialFalloff * s);
-				float FrustumDistance = (Radius - (fabsf(Vector2::DotProduct(EmissionTangent, ToPixel))));
+				float emitterDistance = lightSource->intensity * pow((1 - s2), 2) / (1 + lightSource->radialFalloff * s);
+				float frustumDistance = (Radius - (fabsf(Vector2::DotProduct(emissionTangent, ToPixel))));
 		
-				if (FrustumDistance < 0.0f)
+				if (frustumDistance < 0.0f)
 				{
-					FrustumDistance = 0.0f;
+					frustumDistance = 0.0f;
 				}
-				if (FrustumDistance > Radius)
+				if (frustumDistance > Radius)
 				{
-					FrustumDistance = Radius;
+					frustumDistance = Radius;
 				}
-				result = EmitterDistance * (FrustumDistance * LightSource->frustumWeight);
+				result = emitterDistance * (frustumDistance * lightSource->frustumWeight);
 			}
 		} break;
 
@@ -119,8 +124,8 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* LightSource)
 		} break;
 	}
 
-	//Normal map calculations
-	if (result > 0 && doFog != true)
+	//Do normal map calculations if light isnt pure dark
+	if (result > 0)
 	{
 		if (x + CameraP.x <= normalBuffer->BufferSizeX && x + CameraP.x >= 0 && y + CameraP.y <= normalBuffer->BufferSizeY && y + CameraP.y >= 0)
 		{
@@ -149,58 +154,61 @@ float Renderer::FindPixelLuminosity(float x, float y, Light* LightSource)
 	return result;
 }
 
+//Loop over every pixel and calculate each pixels rgb value
 void Renderer::RenderLightingPass()
 {
-#if 1
-	const int xSize = (int)outputBuffer->size.x;
-	const int ySize = (int)outputBuffer->size.y;
+	const int xSize = outputBuffer->size.x;
+	const int ySize = outputBuffer->size.y;
 
 	float lightMultiplier = 0.0f;
 
-	float IntensityR = 0.0f;
-	float IntensityG = 0.0f;
-	float IntensityB = 0.0f;
+	float intensityR = 0.0f;
+	float intensityG = 0.0f;
+	float intensityB = 0.0f;
+
+//create a threadpool
 #pragma omp parallel
 	{
-#pragma omp for collapse(3) nowait private(lightMultiplier, IntensityR, IntensityG, IntensityB)
+//create tasks for threads, make each take one index of the next three loops, dont have them wait for other threads to finish, give private variables
+#pragma omp for collapse(3) nowait private(lightMultiplier, intensityR, intensityG, intensityB)
 		for (int x = 0; x < xSize; ++x)
 		{
 			for (int y = 0; y < ySize; ++y)
 			{
-				IntensityR = 0.0f;
-				IntensityG = 0.0f;
-				IntensityB = 0.0f;
+				intensityR = 0.0f;
+				intensityG = 0.0f;
+				intensityB = 0.0f;
 
 				for (int i = 0; i < numLights; ++i)
 				{
 					if (CalculateIfPixelIsLit(x, y, i) == true || doFog == true)
 					{
-						Light* LightSource = lightSource + i;
-						lightMultiplier = FindPixelLuminosity(x, y, LightSource);
+						Light* lightSource = lightSource + i;
+						lightMultiplier = FindPixelLuminosity(x, y, lightSource);
 
 						if (lightMultiplier != 0)
 						{
-							float R_F32 = (LightSource->color.GetRed()) * OneOver255;
-							float G_F32 = (LightSource->color.GetGreen()) * OneOver255;
-							float B_F32 = (LightSource->color.GetBlue()) * OneOver255;
+							//convert from 0 - 255 to 0 - 1
+							float R_F32 = (lightSource->color.GetRed()) * OneOver255;
+							float G_F32 = (lightSource->color.GetGreen()) * OneOver255;
+							float B_F32 = (lightSource->color.GetBlue()) * OneOver255;
+						
 							lightMultiplier *= LightSource->volumetricIntensity;
 
-							IntensityR += (lightMultiplier * R_F32);
-							IntensityG += (lightMultiplier * G_F32);
-							IntensityB += (lightMultiplier * B_F32);
+							//multiply by volumetric intesity to simulate fog (lets you see the light beam itself)
+							intensityR += (lightMultiplier * R_F32);
+							intensityG += (lightMultiplier * G_F32);
+							intensityB += (lightMultiplier * B_F32);
 						}
 					}
 				}
 
-				lightR[x][y] = IntensityR;
-				lightG[x][y] = IntensityG;
-				lightB[x][y] = IntensityB;
+				lightR[x][y] = intensityR;
+				lightG[x][y] = intensityG;
+				lightB[x][y] = intensityB;
 			}
 		}
 	}
-#else
-	inputBuffer->Blit(outputBuffer);
-#endif
 }
 </code></pre>
 							</p>
