@@ -173,7 +173,7 @@
 <span style="color: rgb(94, 129, 172); font-weight: 400;">#<span style="color: rgb(129, 161, 193); font-weight: 400;">pragma</span> omp parallel</span>
     {
 <span style="color: rgb(108, 120, 145); font-weight: 400;">//create tasks for threads, make each take one index of the next three loops,</span>
-<span style="color: rgb(108, 120, 145); font-weight: 400;">//dont have them wait for other threads to finish, assign private variables</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">//dont have them wait for other threads to finish, use private() to assign local variables to each thread</span>
 <span style="color: rgb(94, 129, 172); font-weight: 400;">#<span style="color: rgb(129, 161, 193); font-weight: 400;">pragma</span> omp for collapse(3) nowait private(lightMultiplier, intensityR, intensityG, intensityB)</span>
         <span style="color: rgb(129, 161, 193); font-weight: 400;">for</span> (<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> x = <span style="color: rgb(180, 142, 173); font-weight: 400;">0</span>; x &lt; xSize; ++x)
         {
