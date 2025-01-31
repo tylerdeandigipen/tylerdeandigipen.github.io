@@ -3276,11 +3276,11 @@ input, select, textarea {
 			-webkit-justify-content: center;
 			-ms-justify-content: center;
 			justify-content: center;
-			min-height: 100vh;
+			min-height: 0vh;
 		}
 
 			body.is-ie .wrapper.fullscreen {
-				height: 100vh;
+				height: 0vh;
 			}
 
 			@media screen and (max-width: 1280px) {
@@ -3318,7 +3318,6 @@ input, select, textarea {
 			-ms-transition: opacity 1s ease, -ms-transform 1s ease;
 			transition: opacity 1s ease, transform 1s ease;
 			opacity: 1.0;
-			margin: 0
 		}
 
 		.wrapper.fade-up.inactive > .inner,
