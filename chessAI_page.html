@@ -41,7 +41,7 @@
 								<h2>Bitboards</h2>
 								A bitboard is a 64 bit integer representing the entire board state for one piece type. As an example, lets make a bitboard for the black pawns.
 								First we asign a number to each board square. Then for every square with our desired piece type we set that squares number bit to 1 on our bitboard.
-								Now we have a single number representing the board for black pawns.<br /><br />
+								Now we have a single number representing the board for black pawns.
 
 								<h3>But why use bitboards?</h3>
 
@@ -49,7 +49,19 @@
 								Using bitboards allow us to, using bit operations, very quickly determine many things about the current board state. For instance, it lets us get all pieces of a specific type in a single quick bit operation,
 								where as if all pieces were stored in an array we would have too slowly loop over every square. Bitboards are also very information dense, storing a lot of information in a small amount of bytes.
 
-								<h2>Bitboards</h2>
+								<h2>Putting the <i>magic</i> in Magic Bitboards</h2>
+								<h3>What is a magic bitboard?</h3>
+								When generating the moves for a sliding piece (rook, bishop, queen) we need to know how far the sliding piece can move before getting blocked. We could check every square in each direction but that would be very slow and inefficent.
+								A much faster way would be to just precalculate a lookup table of every possible combination of starting square and blockers. Sadly however, due to the magnitude of the search space this is not possible.
+								<br />
+								This is where the magic comes in.<br />
+								At compile time generate a unique 64 bit magic number and shift bits for each square. This magic number, when the steps below are followed, maps to a bitboard of what squares the slider can move to.
+								<ol>
+									<li>Mask the relevent bits that, on an empty board, the slider could move to. This gives us our key.</li>
+									<li>Multiply the key by this square's magic number to get an index mapping.</li>
+									<li>Right shift the index mapping by 64 - this squares shift bits giving us an index.</li>
+									<li>Use the index in a precomputed array of possible moves to get the spaces the slider can move to.</li>
+								</ol>
 
 								<br />
 								<div id="chess_code"></div>
