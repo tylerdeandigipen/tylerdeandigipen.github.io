@@ -57,13 +57,13 @@
 
 								This is where the magic comes in.<br /><br />
 								At compile time generate a unique 64 bit magic number and shift bits for each square. We also generate an array possible moves for a given slider.
+								<br />
 								<ol>
 									<li>Mask the relevent bits that, on an empty board, the slider could move to. This gives us our key.</li>
 									<li>Multiply the key by this square's magic number to get an index mapping.</li>
 									<li>Right shift the index mapping by 64 - this squares shift bits giving us an index.</li>
 									<li>Use the index in a the precomputed array of possible moves to get the squares the slider can move to.</li>
 								</ol>
-								<br />
 								Doing all of this allows us to trade some extra space complexity for a lot less time complexity.
 
 								<br />
