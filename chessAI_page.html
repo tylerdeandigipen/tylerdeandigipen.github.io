@@ -52,7 +52,7 @@
 								<br />
 								<h2>Putting the <i>magic</i> in Magic Bitboards</h2>
 								When generating the moves for a sliding piece (rook, bishop, queen) we need to know how far the sliding piece can move before getting blocked. We could check every square in each direction but that would be very slow and inefficent.
-								A much faster way would be to just precalculate a lookup table of every possible combination of starting square and blockers. Sadly however, due to the magnitude of the search space this is not possible.
+								A much faster way would be to just precalculate a lookup table of every possible combination of starting square and blockers.
 								<br />
 
 								This is where the magic comes in.<br /><br />
@@ -64,6 +64,7 @@
 									<li>Use the index in a the precomputed array of possible moves to get the squares the slider can move to.</li>
 								</ol>
 								<br />
+								Doing all of this allows us to trade some extra space complexity for a lot less time complexity.
 
 								<br />
 								<div id="chess_code"></div>
