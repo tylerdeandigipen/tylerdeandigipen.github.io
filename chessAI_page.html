@@ -35,18 +35,22 @@
 							<span class="image fit"><img src="images/LightingShowcase.gif" alt="" /></span>
 							<p>
 								This Chess AI is by far one of the projects I am most proud of. It uses many programming techniques that I had not used before.
-								Some of the more noteworthy techniques I used are bitboards, transposition tables, recursion, alpha beta pruning, magic bitboards, and a custom hashing function.
+								Some of the more noteworthy techniques I used are bitboards, magic bitboards, recursion, alpha beta pruning, transposition tables, and a custom hashing function.
 								<br />
 
 								<h2>Bitboards</h2>
 								A bitboard is a 64 bit integer representing the entire board state for one piece type. As an example, lets make a bitboard for the black pawns.
 								First we asign a number to each board square. Then for every square with our desired piece type we set that squares number bit to 1 on our bitboard.
-								Now we have a single number representing the board for black pawns.
-								<h3>But why use bitboards</h3>
+								Now we have a single number representing the board for black pawns.<br /><br />
+
+								<h3>But why use bitboards?</h3>
+
 								It's <i>fast</i> <br />
-								Using bitboards allow us to, using bit operations, very quickly determine many things about the current board state. For instance it lets us get all pieces of a specific type in a single quick bit operation,
+								Using bitboards allow us to, using bit operations, very quickly determine many things about the current board state. For instance, it lets us get all pieces of a specific type in a single quick bit operation,
 								where as if all pieces were stored in an array we would have too slowly loop over every square. Bitboards are also very information dense, storing a lot of information in a small amount of bytes.
-								
+
+								<h2>Bitboards</h2>
+
 								<br />
 								<div id="chess_code"></div>
 								<h3>Code Sample</h3>
