@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Chess AI Deep Dive</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title"></a>
+				<nav>
+					<ul>
+						<li><a href="chessAI_page.html" class="active">Chess AI</a></li>
+						<li><a href="index.html">Home</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+                            <h1 class="major">Chess AI Deep Dive</h1>
+							<span class="image fit"><img src="images/LightingShowcase.gif" alt="" /></span>
+							<p>
+								This Chess AI is by far one of the projects I am most proud of. It uses many programming techniques that I had not used before.
+								Some of the more noteworthy techniques I used are bitboards, transposition tables, recursion, alpha beta pruning, magic bitboards, and a custom hashing function.
+								<br />
+
+								<h3>How it works:</h3>
+								<ol>
+									<li>All objects and tilesets are merged together into one image (the normal maps are also merged into a separate image).</li>
+									<li>For each light, we then go over each pixel in its range and calculate the light's strength, using the normal map to factor in the surface normal.</li>
+									<li>The individual lights strengths are added together, resulting in the total brightness.</li>
+									<li>We then apply any post-processing effects, like dithering and scanlines.</li>
+								</ol>
+
+								<div id="chess_code"></div>
+								<h3>Code Sample</h3>
+								<pre><code>
+
+</code></pre><!--Created using https://highlight.hohli.com/?language=cpp&theme=nord -->
+</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Tyler Dean. All rights reserved.</li><li>Base Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
