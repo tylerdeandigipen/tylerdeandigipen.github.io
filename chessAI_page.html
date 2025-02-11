@@ -54,13 +54,13 @@
 								When generating the moves for a sliding piece (rook, bishop, queen) we need to know how far the sliding piece can move before getting blocked. We could check every square in each direction but that would be very slow and inefficent.
 								A much faster way would be to just precalculate a lookup table of every possible combination of starting square and blockers. This is where the magic comes in.<br /><br />
 
-								At compile time generate a unique 64 bit magic number and shift amount for each square. We also generate an array possible moves for a given slider.
+								At compile time generate a unique 64 bit magic number and shift amount for each square. We also generate an array of possible movement bitboards for a given slider.
 								<br />
 								<ol>
 									<li>Mask the relevent bits that, on an empty board, the slider could move to. This gives us our key.</li>
 									<li>Multiply the key by this square's magic number to get an index mapping.</li>
-									<li>Right shift the index mapping by 64 - this squares shift amount, giving us an index.</li>
-									<li>Use the index in a the precomputed array of possible moves to get the squares the slider can move to.</li>
+									<li>Right shift the index mapping by (64 - this squares shift amount) giving us an index.</li>
+									<li>Use the index in the precomputed array of possible movement bitboards to get the slider's movement bitboard.</li>
 								</ol>
 								Doing all of this allows us to trade some extra space complexity for a lot less time complexity.
 
