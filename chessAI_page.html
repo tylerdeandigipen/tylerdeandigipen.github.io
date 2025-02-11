@@ -49,11 +49,12 @@
 								Using bitboards allow us to, using bit operations, very quickly determine many things about the current board state. For instance, it lets us get all pieces of a specific type in a single quick bit operation,
 								where as if all pieces were stored in an array we would have too slowly loop over every square. Bitboards are also very information dense, storing a lot of information in a small amount of bytes.
 
+								<br />
 								<h2>Putting the <i>magic</i> in Magic Bitboards</h2>
-								<h3>What is a magic bitboard?</h3>
 								When generating the moves for a sliding piece (rook, bishop, queen) we need to know how far the sliding piece can move before getting blocked. We could check every square in each direction but that would be very slow and inefficent.
 								A much faster way would be to just precalculate a lookup table of every possible combination of starting square and blockers. Sadly however, due to the magnitude of the search space this is not possible.
-								<br />
+								<br /><br />
+
 								This is where the magic comes in.<br />
 								At compile time generate a unique 64 bit magic number and shift bits for each square. This magic number, when the steps below are followed, maps to a bitboard of what squares the slider can move to.
 								<ol>
