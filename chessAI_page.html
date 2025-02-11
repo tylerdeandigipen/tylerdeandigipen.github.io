@@ -53,9 +53,9 @@
 								<h2>Putting the <i>magic</i> in Magic Bitboards</h2>
 								When generating the moves for a sliding piece (rook, bishop, queen) we need to know how far the sliding piece can move before getting blocked. We could check every square in each direction but that would be very slow and inefficent.
 								A much faster way would be to just precalculate a lookup table of every possible combination of starting square and blockers. Sadly however, due to the magnitude of the search space this is not possible.
-								<br /><br />
+								<br />
 
-								This is where the magic comes in.<br />
+								This is where the magic comes in.<br /><br />
 								At compile time generate a unique 64 bit magic number and shift bits for each square. We also generate an array possible moves for a given slider.
 								<ol>
 									<li>Mask the relevent bits that, on an empty board, the slider could move to. This gives us our key.</li>
