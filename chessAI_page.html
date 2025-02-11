@@ -39,9 +39,14 @@
 								<br />
 
 								<h3>Bitboards</h3>
-								A bitboard is a 64 bit integer representing the entire board state for one piece type. As an example, lets make a bitboard for the black pawns. 
-								First we asign a number to each board square.
-
+								A bitboard is a 64 bit integer representing the entire board state for one piece type. As an example, lets make a bitboard for the black pawns.
+								First we asign a number to each board square. Then for every square with our desired piece type we set that squares number bit to 1 on our bitboard.
+								Now we have a single number representing the board for black pawns.
+								<br />
+								But why use bitboards? <br />
+								It's <i>fast</i> <br />
+								Using bitboards allow us to, using bit operations, very quickly determine many things about the current board state. It lets us get all pieces of a specific type in a single quick bit operation,
+								where as if all pieces were stored in an array we would have too slowly loop over every square. Bitboards are also very information dense, storing a lot of information in a small amount of bytes.
 								<div id="chess_code"></div>
 								<h3>Code Sample</h3>
 								<pre><code>
