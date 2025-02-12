@@ -31,6 +31,7 @@
 					<section id="main" class="wrapper">
 						<div class="inner">
 							<h1 class="major">Chess AI Deep Dive</h1>
+
 							<div id="unity-container" class="unity-desktop">
 								<canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
 								<div id="unity-loading-bar">
@@ -40,11 +41,6 @@
 									</div>
 								</div>
 								<div id="unity-warning"> </div>
-								<div id="unity-footer">
-									<div id="unity-webgl-logo"></div>
-									<div id="unity-fullscreen-button"></div>
-									<div id="unity-build-title">ChessAI</div>
-								</div>
 							</div>
 							<script>
 
@@ -126,8 +122,8 @@
 								} else {
 									// Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-									canvas.style.width = "960px";
-									canvas.style.height = "600px";
+									canvas.style.width = "100%";
+									//canvas.style.height = "600px";
 								}
 
 								loadingBar.style.display = "block";
@@ -148,8 +144,8 @@
 								};
 
 								document.body.appendChild(script);
-
 							</script>
+
 							<p>
 								This Chess AI is by far one of the projects I am most proud of. It uses many programming techniques that I had not used before.
 								Some of the more noteworthy techniques I used are bitboards, magic bitboards, alpha beta pruning, a custom hashing function, and transposition tables.
