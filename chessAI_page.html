@@ -143,6 +143,13 @@
 								document.body.appendChild(script);
 
 							</script>
+							<script>
+								document.addEventListener('wheel', onScroll, false);
+								document.addEventListener('mousemove', onMouse, false);
+								var content = document.getElementsByClassName('webgl-content');
+								function onMouse() { content[0].style['pointer-events'] = 'auto'; }
+								function onScroll() { content[0].style['pointer-events'] = 'none'; }
+							</script>
 
 							<p>
 								This Chess AI is by far one of the projects I am most proud of. It uses many programming techniques that I had not used before.
