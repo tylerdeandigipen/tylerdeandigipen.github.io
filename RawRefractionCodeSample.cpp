@@ -1,5 +1,5 @@
-constexpr float degToRad = 0.01745329f //Precomputed degrees to radians conversion ratio
-constexpr float OneOver255 = 0.00392156f //Precompute 1 / 255 for conversion from 0 - 255 into 0 - 1
+constexpr float degToRad = 0.01745329f; //Precomputed degrees to radians conversion ratio
+constexpr float OneOver255 = 0.00392156f; //Precompute 1 / 255 for conversion from 0 - 255 into 0 - 1
 
 
 //calculate the given lightsource's effect on the current pixel
@@ -71,7 +71,9 @@ float Renderer::CalculatePointLightContribution(int x, int y, const Light* light
 
     //if the current pixel is outside the lights radius
     if (distFromConeCenter >= 1.0f)
+    {
         return 0.0f;
+    }
 
     float distFromConeCenterSquared = distFromConeCenter * distFromConeCenter;
     return = lightSource->intensity * pow((1.0f - distFromConeCenterSquared), 2.0f) / (1.0f + lightSource->radialFalloff * distFromConeCenter);
@@ -103,30 +105,21 @@ float Renderer::CalculateDirectionalLightContribution(int x, int y, const Light*
     }
 
     float distanceSq = Vector2::DotProduct(toPixel, toPixel);
-    float radius = dot * dRadius;
+    float distScalarSq = distanceSq / pow(lightSource->radius, 2.0f);
 
     //leave early if the current pixel is outside the light sources radius
-    if (distScalar >= 1.0f)
+    if (distScalarSq >= 1.0f)
     {
         return 0.0f;
     }
 
-    float distance = sqrt(distanceSq);
-    float distScalar = distance / lightSource->radius;
+    float radius = dot * dRadius;
+    float distScalar = sqrt(distScalarSq);
 
-    float distScalarSquared = distScalar * distScalar;
-    float s = (1.0f - distScalarSquared);
-    float emitterDistance = lightSource->intensity * (s * s) / (1.0f + lightSource->radialFalloff * distScalar);
+    float emitterDistance = lightSource->intensity * pow((1.0f - distScalarSq), 2.0f) / (1.0f + lightSource->radialFalloff * distScalar);
     float arcDistance = radius - abs(Vector2::DotProduct(emissionTangent, toPixel));
+    arcDistance = clamp(arcDistance, 0.0f, radius);
 
-    if (arcDistance < 0.0f)
-    {
-        arcDistance = 0.0f;
-    }
-    if (arcDistance > radius)
-    {
-        arcDistance = radius;
-    }
     return = emitterDistance * (arcDistance * lightSource->frustumWeight);
 }
 
@@ -156,28 +149,31 @@ void Renderer::RenderLightingPass()
                 {
                     //see if pixel is lit before running expensive lighting calculations
                     //this saves time over running lighting calculations on unlit pixels
-                    if (CalculateIfPixelIsLit(x, y, i) == true)
+                    if (CalculateIfPixelIsLit(x, y, i) != true)
                     {
-                        Light* lightSource = &lights[i];
-                        float lightMultiplier = FindPixelLuminosity(x, y, lightSource);
-
-                        if (lightMultiplier != 0.0f)
-                        {
-                            //convert from 0 - 255 into 0 - 1
-                            float R_F32 = lightSource->color.GetRed() * OneOver255;
-                            float G_F32 = lightSource->color.GetGreen() * OneOver255;
-                            float B_F32 = lightSource->color.GetBlue() * OneOver255;
-
-                            //multiply by volumetric intesity to simulate fog
-                            //this lets you see the light beam itself
-                            lightMultiplier *= lightSource->volumetricIntensity;
-
-                            //multiply the intensity of the light by the underlying pixel color
-                            intensityR += lightMultiplier * R_F32;
-                            intensityG += lightMultiplier * G_F32;
-                            intensityB += lightMultiplier * B_F32;
-                        }
+                        continue;
                     }
+
+                    Light* lightSource = &lights[i];
+                    float lightMultiplier = FindPixelLuminosity(x, y, lightSource);
+
+                    if (lightMultiplier <= 0.0f)
+                    {
+                        continue;
+                    }
+
+                    //convert from 0 - 255 into 0 - 1
+                    float R_F32 = lightSource->color.GetRed() * OneOver255;
+                    float G_F32 = lightSource->color.GetGreen() * OneOver255;
+                    float B_F32 = lightSource->color.GetBlue() * OneOver255;
+
+                    //simulate fog by multiplying by volumetric intesity
+                    lightMultiplier *= lightSource->volumetricIntensity;
+
+                    //multiply the intensity of the light by the underlying pixel color
+                    intensityR += lightMultiplier * R_F32;
+                    intensityG += lightMultiplier * G_F32;
+                    intensityB += lightMultiplier * B_F32;
                 }
 
                 //store result in pixel array
