@@ -187,7 +187,8 @@
 
 								Due to the ammount of possible boardstates it is impossible to store all 2^<sup>133</sup> possibilities in a 2^<sup>64</sup> intager. So at this point the goal becomes
 								minimizing hash collisions as much as possible. The way we acomplish this is by making the randomly generated numbers have a high degree of linear independance. We treat each
-								board square as a vector and try to make as many of them as possible only able to add up to 0 when they have a coefficient of 0.
+								board square as a vector and try to make as many of them as possible only able to add up to 0 when they each have a coefficient of 0. Doing this minimizes the amount of inputs 
+								that can lead to one output.
 
 								<h2>Transposition Tables</h2>
 								Now that we can store boardstates using Zobrist hashing we can implement a transposition table. A transposition table is a way to store boardstates that we have already evaluated
