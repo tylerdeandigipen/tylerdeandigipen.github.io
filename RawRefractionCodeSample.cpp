@@ -139,7 +139,7 @@ void Renderer::RenderLightingPass()
     //create a threadpool
 #pragma omp parallel
     {
-        //create tasks for threads, make each take one index of the next three loops,
+        //create tasks for threads, make each take one index of the next two loops,
         //dont have them wait for other threads to finish
 #pragma omp for collapse(2) nowait
         //loop through x then y because our data is column major

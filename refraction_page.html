@@ -192,7 +192,7 @@
     <span style="color: rgb(108, 120, 145); font-weight: 400;">//create a threadpool</span>
 <span style="color: rgb(94, 129, 172); font-weight: 400;">#<span style="color: rgb(129, 161, 193); font-weight: 400;">pragma</span> omp parallel</span>
     {
-        <span style="color: rgb(108, 120, 145); font-weight: 400;">//create tasks for threads, make each take one index of the next three loops,</span>
+        <span style="color: rgb(108, 120, 145); font-weight: 400;">//create tasks for threads, make each take one index of the next two loops,</span>
         <span style="color: rgb(108, 120, 145); font-weight: 400;">//dont have them wait for other threads to finish</span>
 <span style="color: rgb(94, 129, 172); font-weight: 400;">#<span style="color: rgb(129, 161, 193); font-weight: 400;">pragma</span> omp for collapse(2) nowait</span>
         <span style="color: rgb(108, 120, 145); font-weight: 400;">//loop through x then y because our data is column major</span>
