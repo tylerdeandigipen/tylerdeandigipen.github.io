@@ -105,13 +105,13 @@
     }
 
     <span style="color: rgb(108, 120, 145); font-weight: 400;">//calculate the normals effect on current pixel</span>
-    Vector2 pos = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(x, y);
-    Vector2 distFromLight = lightSource-&gt;position - pos;
-    Vector2 distNormalized = distFromLight.<span style="color: rgb(143, 188, 187); font-weight: 400;">Normalize</span>();
-    Vector2 normalDir = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(normalR * OneOver255, normalG * OneOver255);
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> pos = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(x, y);
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> distFromLight = lightSource-&gt;position - pos;
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> distNormalized = distFromLight.<span style="color: rgb(143, 188, 187); font-weight: 400;">Normalize</span>();
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> normalDir = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(normalR * OneOver255, normalG * OneOver255);
     normalDir *= <span style="color: rgb(180, 142, 173); font-weight: 400;">2.0f</span>;
     normalDir -= <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(<span style="color: rgb(180, 142, 173); font-weight: 400;">1.0f</span>, <span style="color: rgb(180, 142, 173); font-weight: 400;">1.0f</span>);
-    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> normalFalloff = -Vector2::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(distNormalized, normalDir);
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> normalFalloff = -<span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(distNormalized, normalDir);
     normalFalloff = <span style="color: rgb(143, 188, 187); font-weight: 400;">clamp</span>(normalFalloff, <span style="color: rgb(180, 142, 173); font-weight: 400;">0.0f</span>, <span style="color: rgb(180, 142, 173); font-weight: 400;">1.0f</span>);
     <span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> normalFalloff * normalStrength;
 }
@@ -119,7 +119,7 @@
 <span style="color: rgb(108, 120, 145); font-weight: 400;">//calulate the overall contribution of given point lightsource to pixel brightness</span>
 <span style="color: rgb(136, 192, 208); font-weight: 400;"><span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">Renderer::CalculatePointLightContribution</span><span style="color: rgb(216, 222, 233); font-weight: 400;">(<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> x, <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> y, <span style="color: rgb(143, 188, 187); font-weight: 400;">const</span> Light* lightSource)</span>
 </span>{
-    Vector2 dist = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(x, y) -  lightSource-&gt;position;
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> dist = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(x, y) -  lightSource-&gt;position;
     <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> distFromConeCenter = <span style="color: rgb(143, 188, 187); font-weight: 400;">sqrt</span>(Vector2::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(dist, dist)) / lightSource-&gt;radius;
 
     <span style="color: rgb(108, 120, 145); font-weight: 400;">//if the current pixel is outside the lights radius</span>
@@ -141,23 +141,23 @@
     <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> maxAngleRadians = degToRad * -lightSource-&gt;maxAngle;
 
     <span style="color: rgb(108, 120, 145); font-weight: 400;">//find edges of the viewcone</span>
-    Vector2 leftEdge = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(-<span style="color: rgb(143, 188, 187); font-weight: 400;">sinf</span>(minAngleRadians), <span style="color: rgb(143, 188, 187); font-weight: 400;">cosf</span>(minAngleRadians));
-    Vector2 rightEdge = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(-<span style="color: rgb(143, 188, 187); font-weight: 400;">sinf</span>(maxAngleRadians), <span style="color: rgb(143, 188, 187); font-weight: 400;">cosf</span>(maxAngleRadians));
-    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> dRadius = Vector2::<span style="color: rgb(143, 188, 187); font-weight: 400;">Length</span>(rightEdge - leftEdge);
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> leftEdge = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(-<span style="color: rgb(143, 188, 187); font-weight: 400;">sinf</span>(minAngleRadians), <span style="color: rgb(143, 188, 187); font-weight: 400;">cosf</span>(minAngleRadians));
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> rightEdge = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(-<span style="color: rgb(143, 188, 187); font-weight: 400;">sinf</span>(maxAngleRadians), <span style="color: rgb(143, 188, 187); font-weight: 400;">cosf</span>(maxAngleRadians));
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> dRadius = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>::<span style="color: rgb(143, 188, 187); font-weight: 400;">Length</span>(rightEdge - leftEdge);
 
     <span style="color: rgb(108, 120, 145); font-weight: 400;">//find the viewcones direction and tangent lines</span>
-    Vector2 emissionDirection = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(-<span style="color: rgb(143, 188, 187); font-weight: 400;">sinf</span>(angleRadians), <span style="color: rgb(143, 188, 187); font-weight: 400;">cosf</span>(angleRadians));
-    Vector2 emissionTangent = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(-emissionDirection.y, emissionDirection.x);
-    Vector2 toPixel = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(x, y) -  lightSource-&gt;position;
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> emissionDirection = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(-<span style="color: rgb(143, 188, 187); font-weight: 400;">sinf</span>(angleRadians), <span style="color: rgb(143, 188, 187); font-weight: 400;">cosf</span>(angleRadians));
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> emissionTangent = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(-emissionDirection.y, emissionDirection.x);
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> toPixel = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(x, y) -  lightSource-&gt;position;
 
     <span style="color: rgb(108, 120, 145); font-weight: 400;">//find and check if current pixel is inside the lights viewcone</span>
-    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> dot = Vector2::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(toPixel, emissionDirection);
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> dot = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(toPixel, emissionDirection);
     <span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (dot &lt;= <span style="color: rgb(180, 142, 173); font-weight: 400;">0.0f</span>)
     {
         <span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> <span style="color: rgb(180, 142, 173); font-weight: 400;">0.0f</span>;
     }
 
-    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> distanceSq = Vector2::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(toPixel, toPixel);
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> distanceSq = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(toPixel, toPixel);
     <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> distScalarSq = distanceSq / <span style="color: rgb(143, 188, 187); font-weight: 400;">pow</span>(lightSource-&gt;radius, <span style="color: rgb(180, 142, 173); font-weight: 400;">2.0f</span>);
 
     <span style="color: rgb(108, 120, 145); font-weight: 400;">//leave early if the current pixel is outside the light sources radius</span>
