@@ -120,7 +120,7 @@
 <span style="color: rgb(136, 192, 208); font-weight: 400;"><span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">Renderer::CalculatePointLightContribution</span><span style="color: rgb(216, 222, 233); font-weight: 400;">(<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> x, <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> y, <span style="color: rgb(143, 188, 187); font-weight: 400;">const</span> Light* lightSource)</span>
 </span>{
     <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span> dist = <span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>(x, y) -  lightSource-&gt;position;
-    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> distFromConeCenter = <span style="color: rgb(143, 188, 187); font-weight: 400;">sqrt</span>(Vector2::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(dist, dist)) / lightSource-&gt;radius;
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> distFromConeCenter = <span style="color: rgb(143, 188, 187); font-weight: 400;">sqrt</span>(<span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(dist, dist)) / lightSource-&gt;radius;
 
     <span style="color: rgb(108, 120, 145); font-weight: 400;">//if the current pixel is outside the lights radius</span>
     <span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (distFromConeCenter &gt;= <span style="color: rgb(180, 142, 173); font-weight: 400;">1.0f</span>)
@@ -170,7 +170,7 @@
     <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> distScalar = <span style="color: rgb(143, 188, 187); font-weight: 400;">sqrt</span>(distScalarSq);
 
     <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> emitterDistance = lightSource-&gt;intensity * <span style="color: rgb(143, 188, 187); font-weight: 400;">pow</span>((<span style="color: rgb(180, 142, 173); font-weight: 400;">1.0f</span> - distScalarSq), <span style="color: rgb(180, 142, 173); font-weight: 400;">2.0f</span>) / (<span style="color: rgb(180, 142, 173); font-weight: 400;">1.0f</span> + lightSource-&gt;radialFalloff * distScalar);
-    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> arcDistance = radius - <span style="color: rgb(143, 188, 187); font-weight: 400;">abs</span>(Vector2::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(emissionTangent, toPixel));
+    <span style="color: rgb(143, 188, 187); font-weight: 400;">float</span> arcDistance = radius - <span style="color: rgb(143, 188, 187); font-weight: 400;">abs</span>(<span style="color: rgb(143, 188, 187); font-weight: 400;">Vector2</span>::<span style="color: rgb(143, 188, 187); font-weight: 400;">DotProduct</span>(emissionTangent, toPixel));
     arcDistance = <span style="color: rgb(143, 188, 187); font-weight: 400;">clamp</span>(arcDistance, <span style="color: rgb(180, 142, 173); font-weight: 400;">0.0f</span>, radius);
 
     <span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> = emitterDistance * (arcDistance * lightSource-&gt;frustumWeight);
