@@ -32,7 +32,7 @@ float Renderer::FindPixelLuminosity(int x, int y, const Light* lightSource)
     //Do normal map calculations if light isnt pure dark
     if (result > 0.0f)
     {
-        result *= ApplyNormalMap(x, y, lightSource);
+        result *= CalcualteNormalMapScalar(x, y, lightSource);
     }
 
     return result;
