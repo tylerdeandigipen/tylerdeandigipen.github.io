@@ -184,7 +184,7 @@
 								This reduces the ammount of moves we have to check by upwards of <i>98%</i>. Making the AI signifigantly faster.
 
 								<h2 style="padding-top: 40px">Transposition Tables</h2>
-								There are many different moves that can lead to the same board state, in order to not waste time re-evaluating these board states we have seen before we need an efficent way to store
+								There are many different moves that can lead to the same board state. In order to not waste time re-evaluating these board states we have seen before, we need an efficent way to store
 								and retrieve our previous findings. <br /><br />
 
 								To do this we can implement a transposition table. We start by making a large dictionary of previous board states that we have seen, with the positions of all the pieces as a key.
