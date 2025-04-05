@@ -189,7 +189,7 @@
 								To do this we can implement a transposition table. We start by making a large dictionary of previous board states that we have seen, with the positions of all the pieces as a key.
 								Now as we evaluate board states we add them to this dictionary storing the depth evaluated at, who the board is advantageous to, and whos turn it is. Then whenever we try to evaluate
 								a boardstate we first check if we have already evaluated it by seeing if its in the transposition table. If it is we can then skip this board state as we have already evaluated it.<br /><br />
-								<i>But how do we turn an entire chessboard into a unique number?</i>
+								<i>But how do we turn an entire chessboard into a unique number for the key?</i>
 
 								<h2>Hashing Boardstates</h2>
 								We use Zobrist hashing to create the keys needed for the transposition table. <br /><br />
