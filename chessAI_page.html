@@ -184,13 +184,16 @@
 
 								<h2>Transposition Tables</h2>
 								There are many different moves that can lead to the same board state, in order to not waste time re-evaluating these board states we have seen before we need an efficent way to store
-								and retrieve our previous findings. <br />
+								and retrieve our previous findings. <br /><br />
+
 								To do this we can implement a transposition table. We start by making a large dictionary of previous board states that we have seen, with the positions of all the pieces as a key.
-								Now as we evaluate board states we add them to this dictionary storing the depth evaluated at, who the board is advantageous to, and whos turn it is. Then whenever we try to evaluate 
-								a boardstate we first check if we have already evaluated it by seeing if its in the transposition table. If it is we can then skip this board state as we have already evaluated it.
+								Now as we evaluate board states we add them to this dictionary storing the depth evaluated at, who the board is advantageous to, and whos turn it is. Then whenever we try to evaluate
+								a boardstate we first check if we have already evaluated it by seeing if its in the transposition table. If it is we can then skip this board state as we have already evaluated it.<br />
+								But how do we turn an entire chessboard into a unique number?
 
 								<h2>Hashing Boardstates</h2>
-								In order to save good moves we have previously evaluated we need a good way to store an entire board state. To acomplish this I implemented Zobrist hashing.
+								In order turn out board state into a unique number we use Zobrist hashing. <br /><br />
+
 								Zobrist hashing works by asigning a unique random number for every piece on every square. Whenever we have a piece on a specific square we xor the random
 								number asigned to that piece square combo into a running total. Once we do this for every piece on the board we have a semi-unique number for each board state.<br /><br />
 
