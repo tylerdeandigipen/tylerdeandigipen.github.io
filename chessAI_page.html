@@ -197,7 +197,7 @@
 								The way it works is by asigning a unique random number for every piece on every square. Whenever we have a piece on a specific square we xor the random
 								number asigned to that piece square combo into a running total. Once we do this for every piece on the board we have a semi-unique number for each board state.<br /><br />
 
-								Due to the ammount of possible boardstates it is impossible to store all 2^<sup>133</sup> possibilities in a 2^<sup>64</sup> intager. So at this point the goal becomes
+								Due to the ammount of possible boardstates it is impossible to store all 2<sup>133</sup> possibilities in a 2<sup>64</sup> intager. So at this point the goal becomes
 								minimizing hash collisions as much as possible. The way we acomplish this is by making the randomly generated numbers have a high degree of linear independance. We treat each
 								board square as a vector and try to make as many of them as possible only able to add up to 0 when they each have a coefficient of 0. Doing this minimizes the amount of inputs
 								that can lead to one output.
