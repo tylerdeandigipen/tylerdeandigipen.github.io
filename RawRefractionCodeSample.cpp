@@ -18,7 +18,7 @@ float Renderer::FindPixelLuminosity(int x, int y, const Light* lightSource)
 
         case LightSourceType_Directional:
         {
-            result = CalculatePointLightContribution(x, y, lightSource);
+            result = CalculateDirectionalLightContribution(x, y, lightSource);
             break;
         }
 
