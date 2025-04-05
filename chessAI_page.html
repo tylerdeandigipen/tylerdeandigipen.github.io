@@ -178,9 +178,9 @@
 								However due to the nature of this aproach, the time it takes to search grows exponentially. In order to reduce the time taken we employ alpha beta pruning.<br /><br />
 
 								Alpha beta pruning removes possible branches that we know are bad compared to a better move we saw before hand. So if test a move and it results in a neutral state, and we test another move that results
-								us losing a rook. We can then safely discard all possible moves after the bad move because we know that it ends up poorly for us.<br />
+								us losing a rook. We can then safely discard all possible moves after the bad move because we know that it ends up poorly for us.<br /><br />
 
-								This reduces the ammount of moves we have to check by upwards of 98% making the AI signifigantly faster.
+								This reduces the ammount of moves we have to check by upwards of <b>98%</b> making the AI signifigantly faster.
 
 								<h2 style="padding-top: 20px">Transposition Tables</h2>
 								There are many different moves that can lead to the same board state, in order to not waste time re-evaluating these board states we have seen before we need an efficent way to store
