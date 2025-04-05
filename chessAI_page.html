@@ -155,11 +155,11 @@
 
 								<h3>But why use bitboards?</h3>
 
-								It's <i>fast</i> <br />
-								Using bitboards allow us to, using bit operations, very quickly determine many things about the current board state. For instance, it lets us get all pieces of a specific type in a single quick bit operation,
-								where as if all pieces were stored in an array we would have too slowly loop over every square. Bitboards are also very information dense, storing a lot of information in a small amount of memory.
+								It's <i>fast</i> <br /><br />
 
-								<br />
+								Using bitboards allow us to, using bit operations, very quickly determine many things about the current board state. For instance, it lets us get all pieces of a specific type in a single quick bit operation,
+								where as if all pieces were stored in an array we would have too slowly loop over every square. Bitboards are also very information dense, storing a lot of information in a small amount of memory.<br />
+
 								<h2 style="padding-top: 40px">Putting the <i>magic</i> in Magic Bitboards</h2>
 								When generating the moves for a sliding piece (rook, bishop, queen) we need to know how far the sliding piece can move before getting blocked. We could check every square in each direction but that would be very slow and inefficent.
 								A much faster way would be to just precalculate a lookup table of every possible combination of starting square and blockers. This is where the magic comes in.<br /><br />
@@ -172,8 +172,8 @@
 									<li>Right shift the index mapping by (64 - this squares shift amount), giving us an index.</li>
 									<li>Use the index in the precomputed array of possible movement bitboards to get the slider's movement bitboard.</li>
 								</ol>
-								Doing all of this allows us to trade some extra space complexity for a lot less time complexity.
-								<br />
+								Doing all of this allows us to trade some extra space complexity for a lot less time complexity.<br />
+
 								<h2 style="padding-top: 40px">Alpha Beta Pruning</h2>
 								In order to find the best possible move the AI simulates every series of possible moves and responses up to a certain depth. In general the further the AI looks ahead the smarter it becomes.
 								However due to the nature of this aproach, the time it takes to search grows exponentially. In order to reduce the time taken we employ alpha beta pruning.<br /><br />
