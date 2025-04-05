@@ -148,7 +148,7 @@
 								Some of the more noteworthy techniques I used are magic bitboards, alpha beta pruning, a custom hashing function, and transposition tables.
 								<br />
 
-								<h2>Magic Bitboards</h2>
+								<h2 style="padding-top: 20px">Magic Bitboards</h2>
 								A bitboard is a 64 bit integer representing the entire board state for one piece type. As an example, lets make a bitboard for the black pawns.
 								First we asign a number to each board square. Then for every square with our desired piece type we set that squares number bit to 1 on our bitboard.
 								Now we have a single number representing the board for black pawns.
@@ -160,7 +160,7 @@
 								where as if all pieces were stored in an array we would have too slowly loop over every square. Bitboards are also very information dense, storing a lot of information in a small amount of memory.
 
 								<br />
-								<h2>Putting the <i>magic</i> in Magic Bitboards</h2>
+								<h2 style="padding-top: 20px">Putting the <i>magic</i> in Magic Bitboards</h2>
 								When generating the moves for a sliding piece (rook, bishop, queen) we need to know how far the sliding piece can move before getting blocked. We could check every square in each direction but that would be very slow and inefficent.
 								A much faster way would be to just precalculate a lookup table of every possible combination of starting square and blockers. This is where the magic comes in.<br /><br />
 
@@ -173,7 +173,7 @@
 								</ol>
 								Doing all of this allows us to trade some extra space complexity for a lot less time complexity.
 								<br />
-								<h2>Alpha Beta Pruning</h2>
+								<h2 style="padding-top: 20px">Alpha Beta Pruning</h2>
 								In order to find the best possible move the AI simulates every series of possible moves and responses up to a certain depth. In general the further the AI looks ahead the smarter it becomes.
 								However due to the nature of this aproach, the time it takes to search grows exponentially. In order to reduce the time taken we employ alpha beta pruning.<br /><br />
 
@@ -182,7 +182,7 @@
 
 								This reduces the ammount of moves we have to check by upwards of 98% making the AI signifigantly faster.
 
-								<h2>Transposition Tables</h2>
+								<h2 style="padding-top: 20px">Transposition Tables</h2>
 								There are many different moves that can lead to the same board state, in order to not waste time re-evaluating these board states we have seen before we need an efficent way to store
 								and retrieve our previous findings. <br /><br />
 
@@ -192,7 +192,7 @@
 								<i>But how do we turn an entire chessboard into a unique number for the key?</i><br /><br />
 								Simple, we use a hash function.
 
-								<h2 style="padding-top: 1000px">Hashing Boardstates</h2>
+								<h2 style="padding-top: 20px">Hashing Boardstates</h2>
 								The specific hash function we use is called Zobrist Hashing.<br />
 								The way it works is by asigning a unique random number for every piece on every square. Whenever we have a piece on a specific square we xor the random
 								number asigned to that piece square combo into a running total. Once we do this for every piece on the board we have a semi-unique number for each board state.<br /><br />
