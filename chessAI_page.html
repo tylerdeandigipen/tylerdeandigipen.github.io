@@ -206,52 +206,52 @@
 								<div id="chess_code"></div>
 								<h3>Code Sample</h3>
 								<pre><code>
-	<pre style="font-family:monospace;color: rgb(216, 222, 233); background-color: rgb(46, 52, 64); font-weight: 400; "><span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;summary&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">///     Takes in a board state then recursively finds best move</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;/summary&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="board"&gt; A pointer to the current board state &lt;/param&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="alpha"&gt; Previous best move for us &lt;/param&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="beta"&gt; Previous worst move for enemy &lt;/param&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="depth"&gt; How many moves ahead are we &lt;/param&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;returns&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">///     Returns the best move found in that generation and its score</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;/returns&gt;</span>
+	<pre style="font-family:monospace;color: rgb(216, 222, 233); background-color: rgb(46, 52, 64); font-weight: 400; "><span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;summary&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">///     Takes in a board state then recursively finds best move</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;/summary&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="board"&gt; A pointer to the current board state &lt;/param&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="alpha"&gt; Previous best move for us &lt;/param&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="beta"&gt; Previous worst move for enemy &lt;/param&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="depth"&gt; How many moves ahead are we &lt;/param&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;returns&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">///     Returns the best move found in that generation and its score</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;/returns&gt;</span>
 <span style="color: rgb(143, 188, 187); font-weight: 400;">private</span> (<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> score, Move bestMove) <span style="color: rgb(143, 188, 187); font-weight: 400;">Search</span>(Board* board, <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> alpha, <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> beta, <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> depth)
 {
     nodesVisited++;
 
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Make sure this move wouldnt repeat a previous board state (stops 3 fold repetition)</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Make sure this move wouldnt repeat a previous board state (stops 3 fold repetition)</span>
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (RepetitionTable.<span style="color: rgb(143, 188, 187); font-weight: 400;">Contains</span>(board.zobristHashKey)) <span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> IS_REPEAT;
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (depth == AISearchDepth)
     {
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">EvaluateBoardState</span>(board, board.currentColorTurn, depth);
     }
 
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Check if we have already evaluated this state and return if so</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Check if we have already evaluated this state and return if so</span>
 	<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> evaluation = (<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span>)TranspositionTable.<span style="color: rgb(143, 188, 187); font-weight: 400;">ReadEntry</span>(board.zobristHashKey, alpha, beta, depth);
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (evaluation != <span style="color: rgb(180, 142, 173); font-weight: 400;">-1</span>) <span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> evaluation;
 
     TranspositionTable.TableFlag flag = TranspositionTable.TableFlag.alpha;
 	<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> bestEvaluation = <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span>.MinValue + <span style="color: rgb(180, 142, 173); font-weight: 400;">1</span>;
 
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Generate all legal moves, then order based on estimate of how good they are</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Generate all legal moves, then order based on estimate of how good they are</span>
     List&lt;Move&gt; moves = MoveGenerator.<span style="color: rgb(143, 188, 187); font-weight: 400;">GenerateLegalMoves</span>(board);
 	<span style="color: rgb(143, 188, 187); font-weight: 400;">OrderMoves</span>(moves, board);
 
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Check if current team is in mate</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Check if current team is in mate</span>
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> ((Piece.<span style="color: rgb(143, 188, 187); font-weight: 400;">IsSameTeam</span>(board.currentColorTurn, Piece.White)) ? board.whiteInMate : board.blackInMate)
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span>.MinValue + <span style="color: rgb(180, 142, 173); font-weight: 400;">2</span> + depth;
 
     Move bestMoveSoFar = <span style="color: rgb(129, 161, 193); font-weight: 400;">new</span> Move { };
     foreach (Move move in moves)
     {
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Make a move and recursively check its value</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Make a move and recursively check its value</span>
         board-&gt;<span style="color: rgb(143, 188, 187); font-weight: 400;">MakeMove</span>(move);
         evaluation = -<span style="color: rgb(143, 188, 187); font-weight: 400;">Search</span>(board, -beta, -alpha, depth + <span style="color: rgb(180, 142, 173); font-weight: 400;">1</span>).score;
         board-&gt;<span style="color: rgb(143, 188, 187); font-weight: 400;">UndoMove</span>(move); 
 
         bestEvaluation = (evaluation &gt; bestEvaluation) ? evaluation : bestEvaluation;
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//if current eval is better than supplied best move then store move</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//if current eval is better than supplied best move then store move</span>
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (bestEvaluation &gt; alpha)
         {
             alpha = bestEvaluation;
@@ -259,42 +259,42 @@
             flag = TranspositionTable.TableFlag.exact;
         }
 
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//If this move is too good enemy will avoid it</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//If this move is too good enemy will avoid it</span>
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (alpha &gt;= beta)
         {
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Write position to transposition table then prune branch</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Write position to transposition table then prune branch</span>
             TranspositionTable.<span style="color: rgb(143, 188, 187); font-weight: 400;">WriteEntry</span>(board.zobristHashKey, depth, (<span style="color: rgb(143, 188, 187); font-weight: 400;">short</span>)bestEvaluation, TranspositionTable.TableFlag.beta);
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> bestEvaluation;
         }
     }
 
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Write newly evaluated state to transposition table</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Write newly evaluated state to transposition table</span>
     TranspositionTable.<span style="color: rgb(143, 188, 187); font-weight: 400;">WriteEntry</span>(board.zobristHashKey, depth, (<span style="color: rgb(143, 188, 187); font-weight: 400;">short</span>)bestEvaluation, flag);
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> (alpha, bestMoveSoFar);
 }
 
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;summary&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">///     Takes in a list of moves and pointer to current board and estimates how good each move is</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;/summary&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="moves"&gt; A list of currently possible moves &lt;/param&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="board"&gt; A pointer to the current board state &lt;/param</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;summary&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">///     Takes in a list of moves and pointer to current board and estimates how good each move is</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;/summary&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="moves"&gt; A list of currently possible moves &lt;/param&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="board"&gt; A pointer to the current board state &lt;/param</span>
 <span style="color: rgb(136, 192, 208); font-weight: 400;"><span style="color: rgb(129, 161, 193); font-weight: 400;">private</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">void</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">OrderMoves</span><span style="color: rgb(216, 222, 233); font-weight: 400;">(List&lt;Move&gt; moves, Board* board)</span>
 </span>{
     Move curMove;
 	<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> scoreGuess;
     ulong enemyPawnThreatSquares = BitboardHelper.<span style="color: rgb(143, 188, 187); font-weight: 400;">GenerateAllPawnAttackBitboard</span>(Piece.<span style="color: rgb(143, 188, 187); font-weight: 400;">ReverseColor</span>(board-&gt;currentColorTurn), board);
 
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Guess a moves score based on common criteria</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Guess a moves score based on common criteria</span>
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">for</span> (<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> i = <span style="color: rgb(180, 142, 173); font-weight: 400;">0</span>; i &lt; moves.Count; i++)
     {
         scoreGuess = <span style="color: rgb(180, 142, 173); font-weight: 400;">0</span>;
 
-	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (moves[i].destPiece != <span style="color: rgb(180, 142, 173); font-weight: 400;">0x00</span>) <span style="color: rgb(76, 86, 106); font-weight: 400;">//if can capture a piece with a less valuble piece</span>
+	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (moves[i].destPiece != <span style="color: rgb(180, 142, 173); font-weight: 400;">0x00</span>) <span style="color: rgb(108, 120, 145); font-weight: 400;">//if can capture a piece with a less valuble piece</span>
         {
             scoreGuess += <span style="color: rgb(180, 142, 173); font-weight: 400;">8</span> * PieceValues.<span style="color: rgb(143, 188, 187); font-weight: 400;">GetPieceValue</span>(moves[i].destPiece, moves[i].destSquare, board, <span style="color: rgb(129, 161, 193); font-weight: 400;">false</span>) - PieceValues.<span style="color: rgb(143, 188, 187); font-weight: 400;">GetPieceValue</span>(moves[i].startPiece, moves[i].destSquare, board, <span style="color: rgb(129, 161, 193); font-weight: 400;">false</span>);
         }
         
-	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> ((enemyPawnThreatSquares &amp; (<span style="color: rgb(180, 142, 173); font-weight: 400;">1ul</span> &lt;&lt; moves[i].destSquare)) != <span style="color: rgb(180, 142, 173); font-weight: 400;">0</span>)<span style="color: rgb(76, 86, 106); font-weight: 400;">//if moving into pawn attack map</span>
+	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> ((enemyPawnThreatSquares &amp; (<span style="color: rgb(180, 142, 173); font-weight: 400;">1ul</span> &lt;&lt; moves[i].destSquare)) != <span style="color: rgb(180, 142, 173); font-weight: 400;">0</span>)<span style="color: rgb(108, 120, 145); font-weight: 400;">//if moving into pawn attack map</span>
         {
             scoreGuess -= PieceValues.<span style="color: rgb(143, 188, 187); font-weight: 400;">GetPieceValue</span>(moves[i].startPiece, moves[i].destSquare, board, <span style="color: rgb(129, 161, 193); font-weight: 400;">false</span>) + <span style="color: rgb(180, 142, 173); font-weight: 400;">1000</span>;
         }
@@ -303,19 +303,19 @@
         curMove.score = (<span style="color: rgb(143, 188, 187); font-weight: 400;">short</span>)scoreGuess;
         moves[i] = curMove;
     }
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//Sort by each moves score</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//Sort by each moves score</span>
     moves.<span style="color: rgb(143, 188, 187); font-weight: 400;">Sort</span>((a, b) =&gt; b.score.<span style="color: rgb(143, 188, 187); font-weight: 400;">CompareTo</span>(a.score));
 }
 
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;summary&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">///     Takes in a pointer to a board and returns its value relative to the passed in team</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;/summary&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="board"&gt; A point to the current board &lt;/param&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="teamColor"&gt; The color of the current team &lt;/param&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;param name="depth"&gt; How many moves ahead is this &lt;/param&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;returns&gt;</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">///     Returns the score of the board relative to the input team color</span>
-<span style="color: rgb(76, 86, 106); font-weight: 400;">/// &lt;/returns&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;summary&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">///     Takes in a pointer to a board and returns its value relative to the passed in team</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;/summary&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="board"&gt; A point to the current board &lt;/param&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="teamColor"&gt; The color of the current team &lt;/param&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;param name="depth"&gt; How many moves ahead is this &lt;/param&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;returns&gt;</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">///     Returns the score of the board relative to the input team color</span>
+<span style="color: rgb(108, 120, 145); font-weight: 400;">/// &lt;/returns&gt;</span>
 <span style="color: rgb(136, 192, 208); font-weight: 400;"><span style="color: rgb(129, 161, 193); font-weight: 400;">private</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">EvaluateBoardState</span><span style="color: rgb(216, 222, 233); font-weight: 400;">(Board* board, <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> teamColor, <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> depth)</span>
 </span>{
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> ((Piece.<span style="color: rgb(143, 188, 187); font-weight: 400;">IsSameTeam</span>(teamColor, Piece.White) ? board-&gt;whiteInMate : board-&gt;blackInMate) == <span style="color: rgb(129, 161, 193); font-weight: 400;">true</span>)
@@ -323,9 +323,9 @@
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> <span style="color: rgb(143, 188, 187); font-weight: 400;">int</span>.MinValue + <span style="color: rgb(180, 142, 173); font-weight: 400;">2</span> + depth;
     }
 
-	<span style="color: rgb(76, 86, 106); font-weight: 400;">//objective board value is always from white perspective so invert if we want blacks value</span>
+	<span style="color: rgb(108, 120, 145); font-weight: 400;">//objective board value is always from white perspective so invert if we want blacks value</span>
 	<span style="color: rgb(143, 188, 187); font-weight: 400;">int</span> evaluation = Piece.<span style="color: rgb(143, 188, 187); font-weight: 400;">IsSameTeam</span>(teamColor, Piece.White) ? board-&gt;boardValue : -board-&gt;boardValue;
-    evaluation += depth; <span style="color: rgb(76, 86, 106); font-weight: 400;">//Add depth to bias faster play</span>
+    evaluation += depth; <span style="color: rgb(108, 120, 145); font-weight: 400;">//Add depth to bias faster play</span>
 
 	<span style="color: rgb(129, 161, 193); font-weight: 400;">return</span> evaluation;
 }</pre>
