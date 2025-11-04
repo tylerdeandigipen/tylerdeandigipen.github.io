@@ -290,7 +290,8 @@
 
         <span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> (moves[i].destPiece != <span style="color: rgb(180, 142, 173); font-weight: 400;">0x00</span>) <span style="color: rgb(108, 120, 145); font-weight: 400;">//if can capture a piece with a less valuble piece</span>
         {
-            scoreGuess += <span style="color: rgb(180, 142, 173); font-weight: 400;">8</span> * PieceValues.<span style="color: rgb(143, 188, 187); font-weight: 400;">GetPieceValue</span>(moves[i].destPiece, moves[i].destSquare, board, <span style="color: rgb(129, 161, 193); font-weight: 400;">false</span>) - PieceValues.<span style="color: rgb(143, 188, 187); font-weight: 400;">GetPieceValue</span>(moves[i].startPiece, moves[i].destSquare, board, <span style="color: rgb(129, 161, 193); font-weight: 400;">false</span>);
+            scoreGuess += <span style="color: rgb(180, 142, 173); font-weight: 400;">8</span> * PieceValues.<span style="color: rgb(143, 188, 187); font-weight: 400;">GetPieceValue</span>(moves[i].destPiece, moves[i].destSquare, board, <span style="color: rgb(129, 161, 193); font-weight: 400;">false</span>) 
+				- PieceValues.<span style="color: rgb(143, 188, 187); font-weight: 400;">GetPieceValue</span>(moves[i].startPiece, moves[i].destSquare, board, <span style="color: rgb(129, 161, 193); font-weight: 400;">false</span>);
         }
         
         <span style="color: rgb(129, 161, 193); font-weight: 400;">if</span> ((enemyPawnThreatSquares &amp; (<span style="color: rgb(180, 142, 173); font-weight: 400;">1ul</span> &lt;&lt; moves[i].destSquare)) != <span style="color: rgb(180, 142, 173); font-weight: 400;">0</span>)<span style="color: rgb(108, 120, 145); font-weight: 400;">//if moving into pawn attack map</span>
