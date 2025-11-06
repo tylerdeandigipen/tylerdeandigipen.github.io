@@ -129,7 +129,7 @@
 								}
 								else
 								{
-                                    document.write('<div style="text-align: center; padding-top: 50px; vertical-align: middle;">');
+                                    document.write('<div style="text-align: center; padding-top: 20px; vertical-align: top;">');
                                     document.write('<h1>Sorry! The demo web demo only works on desktop.</h1>');
                                     document.write('<p>Please access this page from a desktop for the best experience.</p>');
                                     document.write('</div>');
@@ -141,7 +141,7 @@
 								Some of the more noteworthy techniques I used are magic bitboards, alpha beta pruning, a custom hashing function, and transposition tables.
 								<br />
 
-								<h2 style="padding-top: 40px">Magic Bitboards</h2>
+								<h2 style="padding-top: 40px;">Magic Bitboards</h2>
 								A bitboard is a 64 bit integer representing the entire board state for one piece type. As an example, lets make a bitboard for the black pawns.
 								First we asign a number to each board square. Then for every square with our desired piece type we set that squares number bit to 1 on our bitboard.
 								Now we have a single number representing the board for black pawns.
