@@ -30,7 +30,7 @@
 				<!-- Main -->
 					<section id="main" class="wrapper">
 						<div class="inner">
-							<h1 class="major" style="padding-bottom: 0px; padding-top: 0px">Chess AI Deep Dive!</h1>
+							<h1 class="major" style="padding-bottom: 0px; padding-top: 0px">Chess AI Deep Dive</h1>
 							<h2 style="padding-top: 0px">Try it out!</h2>
 							<p style="padding-bottom: 0px">Below is a playable demo of my chess AI, see if you can beat it!</p>
 							<div id="unity-container" class="unity-desktop">
@@ -126,6 +126,13 @@
 									};
 
 									document.body.appendChild(script);
+								}
+								else
+								{
+                                    document.write('<div style="text-align: center; padding-top: 50px;">');
+                                    document.write('<h1>This content is only available on desktop.</h1>');
+                                    document.write('<p>Please access this page from a desktop computer for the best experience.</p>');
+                                    document.write('</div>');
 								}
 							</script>
 
