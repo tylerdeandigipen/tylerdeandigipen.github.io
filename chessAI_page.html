@@ -129,6 +129,8 @@
 								}
 								else
 								{
+                                    var canvas = document.querySelector("#unity-canvas");
+									canvas.setAttribute("height", "0")
                                     document.write('<div style="text-align: center; padding-top: 20px; vertical-align: top;">');
                                     document.write('<h1>Sorry! The web demo only works on desktop.</h1>');
                                     document.write('<p>Please access this page from a desktop for the best experience.</p>');
