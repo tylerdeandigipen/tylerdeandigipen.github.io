@@ -41,6 +41,12 @@
                                 custom low byte data types, multi-threading the lighting calculations, I also precomputed as much as possible and added many early outs. 
                                 All of these optimizations allowed the lighting engine to run very efficiently even on lower-end computers.
                                 <br />
+                                When optimizing it was very interesting getting to learn more about various optimization techniques and how I could apply them here. 
+                                I loved designing the architecture to make use of early outs, arranging the code in a way that allowed as many cases
+                                to leave as early as possible. Another thing I found interesting was writing low size data structures, I did this for the data we needed 
+                                to store a lot of. One of these types being the pixel data, I made a custom data type to pack all the peccary data in as few bytes as 
+                                possible.
+                                <br />
 
 								<h3>How it works:</h3>
 								<ol>
